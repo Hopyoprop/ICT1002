@@ -2,19 +2,21 @@ import Tkinter as tk
 import tkFileDialog as filedialog
 import sys
 
+# Function will eventually return the keyed in data of the GUI.
 def openMainWindow():
-
+    #Return a dict of the main data.
     return
     ''' insert code for designing user input UI '''
 
-def processSamples():
+def processSamples(maindict):
 
-    # initialize main dictionary
-    # maindict = {}
+    # Initialise count for parsing values into dictionary
     dcount = 0
 
-    # open file dialog browser to select files to parse
+    #Initialise a GUI Object, not used yet.
     mainwin = tk.Tk()
+
+    # open file dialog browser to select files to parse
     file_path = filedialog.askopenfilenames()
 
     # ^^^^^^^^^^^^^^^^^^^^^ remove once GUI is completed / not needed #
@@ -47,7 +49,6 @@ def processSamples():
             elif not (line.lower().startswith("books")) and not(line.lower().startswith("acceptable_age_range")) and \
                 line != "\n":
                 # call function to parse current line
-
                 parseCurrentLine(line, dcount)
 
             elif line.lower().startswith("acceptable_age_range"):
@@ -66,28 +67,26 @@ def processSamples():
 
         # ----- end of 'for path in file_path'
     # return to main once done
-    return
+    return maindict
 
 
 # function definition for parsing any field other than 'Books'/'Acceptable_age_range'/NULL
 def parseCurrentLine(line, dcount):
     try:
-
         # get the field of the line
         field = line.split(": ")[0]
         # get the content portion of the line
         content = line.split(": ")[1]
 
-        templist = []
+        data = []
 
         # further split the contents based on delimiter of ","
-        splittedcontent = content.rstrip('\n').split(",")
-        for a in splittedcontent:
-            templist.append(a.rstrip(' ').lstrip())
+        content = content.strip().split(",")
+        for a in content:
+            data.append(a)
 
-
-        # assign the field and templist into the dictionary
-        maindict[dcount][field] = templist
+        # assign the field and data into the dictionary
+        maindict[dcount][field] = data
 
     except Exception, e:
         print "Exception occured within parseCurrentLine function: " + str(e)
@@ -101,15 +100,16 @@ def parseAgeRange(line, dcount):
         field = line.split(": ")[0]
         # get the content portion of the line
         content = line.split(": ")[1]
-        # further split the contents based on delimiter of ","
-        splittedcontent = content[:-1].rstrip(' ').split("-")
 
-        templist = []
-        # for each substring in 'splittedcontent', add to a list
-        for a in splittedcontent:
-            templist.append(a)
-        # assign the field and templist into the dictionary
-        maindict[dcount][field] = templist
+        data = []
+        # further split the contents based on delimiter of "-"
+        content = content[:-1].strip().split('-')
+
+        # for each substring in content, add to a list
+        for a in content:
+            data.append(a)
+        # assign the field and data into the dictionary
+        maindict[dcount][field] = data
     except:
         print "Exception occured within parseAgeRange function"
         exit()
@@ -118,29 +118,31 @@ def parseAgeRange(line, dcount):
 
 ''' Main Function '''
 if __name__ == "__main__":
-    # call function to instantiate GUI window tk() for user input
+    # Call function to instantiate GUI window tk() for user input
     openMainWindow()
 
-    # initialize variables
+    # Initialize variables
     maindict = {}
 
-    # call function to process data from all sample files into a dictionary
-    processSamples()
+    # Function to process data from all sample files into a dictionary
+    maindict = processSamples(maindict)
 
     # once processing done, take dictionary/list of user input and compare with each dictionary of processed profile
     # DTF_Match()
 
-    # print maindict
     print maindict[0]
-    print maindict[1]
-    print maindict[2]
-    print maindict[3]
-    print maindict[4]
-    print maindict[5]
-    print maindict[6]
-    print maindict[7]
-    print maindict[8]
-    print maindict[9]
+    # print maindict[1]
+    # print maindict[2]
+    # print maindict[3]
+    # print maindict[4]
+    # print maindict[5]
+    # print maindict[6]
+    # print maindict[7]
+    # print maindict[8]
+    # print maindict[9]
+
+    # Output to a CSV File
+    # TO DO
 
 
 
