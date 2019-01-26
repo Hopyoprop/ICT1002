@@ -9,6 +9,7 @@ Yeo Han, Jordan
 '''
 import itertools
 
+
 def processUser(userdict, maindict):
     acceptedcountries = userdict['Acceptable_country']
 
