@@ -138,7 +138,12 @@ if __name__ == "__main__":
     # COUNTRY
     # First round of Processing for Acceptable Countries, returns a dict with accepted users
     acceptedcountry = processUser(userlist, maindict)
-
+    '''
+    for i in range(0, len(maindict)):
+        name = "".join(maindict[i]['Name'])
+        countryname = "".join(maindict[i]['Country'])
+        print "Profiles Accepted from Country Check: %s: %s" % (name, countryname)
+    '''
     ##########################################################################################################
     #Function 3
     #TO DO
@@ -147,7 +152,7 @@ if __name__ == "__main__":
     # once processing done, take dictionary/list of user input and compare with each dictionary of processed profile
     # DTF_Match()
 
-    print maindict[0]
+    # print maindict[0]
     # print maindict[1]
     # print maindict[2]
     # print maindict[3]
