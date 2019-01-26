@@ -130,11 +130,20 @@ if __name__ == "__main__":
 
     # GUI to obtain user's profile and what is his profile
     # TO DO
-    userlist = []   # TEMPORARY PLACEHOLDER LIST. USERLIST WILL BE THE USER GUI INPUTTED VALUES
+
+    ##########################################################################################################
+    # Function 2
+    userlist = {}   # TEMPORARY PLACEHOLDER DICT. USERLIST WILL BE THE USER GUI INPUTTED VALUES
     acceptedcountry = {} # TEMPORARY LOCATION. TO BE MOVED. WILL STORE THE SCALED DOWN MAINDICT WITH USERS OF ACCEPTABLE
     # COUNTRY
     # First round of Processing for Acceptable Countries, returns a dict with accepted users
     acceptedcountry = processUser(userlist, maindict)
+
+    ##########################################################################################################
+    #Function 3
+    #TO DO
+
+    ##########################################################################################################
     # once processing done, take dictionary/list of user input and compare with each dictionary of processed profile
     # DTF_Match()
 
