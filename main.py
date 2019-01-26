@@ -1,5 +1,6 @@
 import Tkinter as tk
 import tkFileDialog as filedialog
+from function2 import processUser
 import sys
 
 # Function will eventually return the keyed in data of the GUI.
@@ -127,6 +128,11 @@ if __name__ == "__main__":
     # Function to process data from all sample files into a dictionary
     maindict = processSamples(maindict)
 
+    # GUI to obtain user's profile and what is his profile
+    # TO DO
+    userlist = []   #TEMPORARY PLACEHOLDER LIST. USERLIST WILL BE THE USER GUI INPUTTED VALUES
+    # First round of Processing for Acceptable Countries
+    processUser(userlist, maindict)
     # once processing done, take dictionary/list of user input and compare with each dictionary of processed profile
     # DTF_Match()
 
