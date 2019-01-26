@@ -133,17 +133,27 @@ if __name__ == "__main__":
 
     ##########################################################################################################
     # Function 2
-    userlist = {}   # TEMPORARY PLACEHOLDER DICT. USERLIST WILL BE THE USER GUI INPUTTED VALUES
+    # TEMPORARY PLACEHOLDER DICT. USERLIST WILL BE THE USER GUI INPUTTED VALUES
+    userdict = {'Name': ['Michael Morton'], 'Gender': ['Male'], 'Age': ['29'],
+                'Dislikes': ['durian', ' garlic', ' swimming'], 'Acceptable_age_range': ['18', '29'],
+                'Acceptable_country': ['Singapore', ' China'],
+                'Books': ['Mere Christianity', 'Knowing God', 'The problem of Pain', 'The God who is there',
+                          'The reason for God: belief in an age of skepticism',
+                          'Experiencing God: knowing and doing the will of God, work book'],
+                'Likes': ['hotpot', ' chicken and chops', ' chilli', ' roses', ' movies'], 'Country': ['Singapore']}
     acceptedcountry = {} # TEMPORARY LOCATION. TO BE MOVED. WILL STORE THE SCALED DOWN MAINDICT WITH USERS OF ACCEPTABLE
     # COUNTRY
     # First round of Processing for Acceptable Countries, returns a dict with accepted users
-    acceptedcountry = processUser(userlist, maindict)
-    '''
-    for i in range(0, len(maindict)):
-        name = "".join(maindict[i]['Name'])
-        countryname = "".join(maindict[i]['Country'])
+    acceptedcountry = processUser(userdict, maindict)
+
+    print "Accepted Countries from User Profile: %s" % (",".join(userdict['Acceptable_country']))
+    for i in acceptedcountry:
+        name = "".join(acceptedcountry[i]['Name'])
+        countryname = "".join(acceptedcountry[i]['Country'])
+
         print "Profiles Accepted from Country Check: %s: %s" % (name, countryname)
-    '''
+    if not acceptedcountry:
+        print "No profiles found compatible!"
     ##########################################################################################################
     #Function 3
     #TO DO
