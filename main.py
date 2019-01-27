@@ -1,6 +1,7 @@
 import Tkinter as tk
 import tkFileDialog as filedialog
 from function2 import processUser
+from sqlfunctions import insert_profile, viewusers
 import sys
 
 # Function will eventually return the keyed in data of the GUI.
@@ -127,6 +128,10 @@ if __name__ == "__main__":
 
     # Function to process data from all sample files into a dictionary
     maindict = processSamples(maindict)
+
+    # Insert user profiles into database
+    insert_userprofs = insert_profile(maindict)
+    viewusers()
 
     # GUI to obtain user's profile and what is his profile
     # TO DO

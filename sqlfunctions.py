@@ -168,9 +168,90 @@ def viewusers():
     conn.commit()
     conn.close()
 
+
 ##########################################################################################################
+# definition to insert all user profile data into the 'userprofs' table
+def insert_profile(maindict):
+
+    check_table_exists(maindict)
+    
+    i = 0
+    # Load each user profile separately and insert data into db.
+    while i < len(maindict.items()):
+        user_values_list = []
+        user_values_str = ""
+        user_list = []
+        # For each user, retrieve the data values and store into list.
+        for key,value in maindict[i].items():
+            user_values_list.append(value)
+        # For each element in list, append to a string to insert as db values later on.
+        for item in user_values_list:
+            for strings in item:
+                """
+                for x in strings:
+                    # NEEDS FURTHER REFINING - Unable to insert User Profile 11.
+                    if x == "'":
+                        x = ""
+                        """
+            user_values_str += "\"%s\", " % item
+        
+        user_values_str = user_values_str.strip()[:-1]
+
+        # try to connect (this action will create a .db file in same directory if it does not exist)
+        conn = sqlite3.connect('userprofiles.db')
+        # create cursor object, and assign it to variable called c
+        c = conn.cursor()
+
+        # Insert user data into userprofs
+        table = "userprofs"
+        c.execute("INSERT OR IGNORE INTO {:} VALUES ({:})".format(table, user_values_str))
+
+        # commit changes (instructions given to the cursor)
+        conn.commit()
+        # close the connection
+        conn.close()
+
+        i += 1
+
+    return maindict
 
 
+##########################################################################################################
+# definition to check if 'userprofs' table exists. If not, create table.
+def check_table_exists(maindict):
+    dict_key = []
+    column_names = ""
+
+    # Append maindict keys as a list
+    for p_key, profile in maindict.items():
+        for k,v in profile.items():
+            dict_key.append(k)
+
+    # Declare table column names
+    column_names += "%s varchar unique," % dict_key[0]
+    for k in dict_key[1:]:
+        if k != dict_key[0]:
+            column_names += "%s varchar," % k
+        else:
+            break
+    column_names = column_names[:-1]
+
+    # try to connect (this action will create a .db file in same directory if it does not exist)
+    conn = sqlite3.connect('userprofiles.db')
+    # create cursor object, and assign it to variable called c
+    c = conn.cursor()
+
+    # create a table with its respective column names
+    table = "userprofs"
+    c.execute("CREATE TABLE IF NOT EXISTS {:} ({:})".format(table, column_names))
+
+    # commit changes (instructions given to the cursor)
+    conn.commit()
+    # close the connection
+    conn.close()
+
+
+##########################################################################################################
 # main function for testing code purposes
 if __name__ == "__main__":
     # try to login with hardcoded username and password (below)
