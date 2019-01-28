@@ -8,23 +8,19 @@ import os.path
 def login(username, password):
     # try to connect to the .db file
     try:
-        # call function to retrieve from a .txt file, which stores names of tables to create, and their column names
-        dbinfo = pull()
-        # call function to create the DB file with respective tables and names
-        createDBfile(dbinfo)
         # call function to check if user exists in db
         returnvalue = authenticateUser(username,password)
 
         # if returned value from authenticateUser() is 0 (no such username and password)
         if returnvalue == 0:
-            print "No such user"
+            # print "No such user!"
             return 0
         elif returnvalue == 1:
-            print "User found"
+            # print "User found!"
             # ------- call function to close/hide login UI, and call function to process sample files into db #
             return 1
         elif returnvalue == 2:
-            print "Database has more than one such username and password!"
+            # print "Database has more than one such username and password!"
             return 0
 
     except sqlite3.Error():
@@ -41,7 +37,9 @@ def pull():
         # separate each column name entry with a ','  -> e.g.   'date_of_creation_field,valid_input,hey'
         # *DO NOT* at any point in time include a space in the string(s)
         file.write("<!-- NOTE: Strictly follow the format: #<table_name> - go to next line - <column_name_1 datatype,"
-                   "column_name_2 datatype> --!>\n#userprofs\nusername varchar primary key,password varchar")
+                   "column_name_2 datatype> --!>\n#userprofs\nusername varchar primary key,password varchar\n#profiles"
+                   "\nUsername varchar primary key,Name varchar,Gender varchar,Country varchar,Acceptable_country "
+                   "varchar,Age varchar,Acceptable_age_range varchar,Likes varchar,Dislikes varchar,Books varchar")
         # close the filestream
         file.close()
 
@@ -120,7 +118,7 @@ def authenticateUser(username,password):
     c = conn.cursor()
 
     # checks if username and password (credentials) exists in the database
-    c.execute("SELECT 1 FROM userprofs WHERE username = (?) AND password = (?)", [username, password])
+    c.execute("SELECT 1 FROM userprofs WHERE username = (?) AND password = (?)", [str(username), str(password)])
     result = c.fetchall()
 
     # if a match is not found, return a 0
@@ -134,6 +132,7 @@ def authenticateUser(username,password):
         return 2
 
     conn.commit()
+
     conn.close()
 
 
@@ -145,15 +144,48 @@ def addnewuser(username, password):
     # create cursor object, and assign it to variable called c
     c = conn.cursor()
 
-    # insert a row of data
-    c.execute("insert or ignore into userprofs (username, password) VALUES (?,?)", (username,password))
+    try:
+        # check if user already exists:
+        exist = c.execute("SELECT * FROM userprofs WHERE username = (?)", (username,)).fetchall()
+        # if exist
+        if len(exist) > 0:
+            return 2
+        # if does not exist
+        elif len(exist) == 0:
+            # insert a row of data
+            c.execute("INSERT INTO userprofs (username, password) VALUES (?,?)", (username, password))
+            # commit changes (instructions given to the cursor)
+            conn.commit()
+        return 1
 
-
-    # commit changes (instructions given to the cursor)
-    conn.commit()
+    except:
+        return 0
 
     # close the connection
     conn.close()
+
+
+##########################################################################################################
+# definition to delete a single profile (login credentials) into the 'userprofs' table
+def deleteuser(user):
+    # try to connect (this action will create a .db file in same directory if it does not exist)
+    conn = sqlite3.connect('userprofiles.db')
+    # create cursor object, and assign it to variable called c
+    c = conn.cursor()
+
+    try:
+        # delete row of data in the table with same username and password
+        c.execute("DELETE FROM userprofs WHERE username = (?)",(user,))
+
+        # commit changes (instructions given to the cursor)
+        conn.commit()
+    except:
+        conn.close()
+        return 0
+
+    # close the connection
+    conn.close()
+    return 1
 
 ##########################################################################################################
 # definition to select all user profiles (accounts) and display from database - for coding use only
@@ -168,13 +200,107 @@ def viewusers():
     conn.commit()
     conn.close()
 
+##########################################################################################################
+# definition to get list of column names from database based on specified table name
+def getlistofcolumns(table_name):
+    # try to connect (this action will create a .db file in same directory if it does not exist)
+    conn = sqlite3.connect('userprofiles.db')
+    # create cursor object, and assign it to variable called c
+    c = conn.cursor()
 
+    # pragma the specified sql table for its column names
+    c.execute("PRAGMA table_info(%s)" % table_name)
+    columnnames = (str(a[1]) for a in c.fetchall())
+    #print "Pragma results:\n" + " ".join(columnnames)
+    conn.commit()
+    conn.close()
+    return columnnames
+
+##########################################################################################################
+# definition to get dictionaries of specified users' profile
+def getuserprofiles(listofuserstofind):
+    # try to connect (this action will create a .db file in same directory if it does not exist)
+    conn = sqlite3.connect('userprofiles.db')
+    # create cursor object, and assign it to variable called c
+    c = conn.cursor()
+
+    # concatenate all usernames in 'listofusertofind' into a single string
+    users = str(", ".join(listofuserstofind))
+    print str(users)
+    statement = "SELECT * FROM profiles WHERE Username in (?)"
+    # get all records from db where any specified username matches a record in 'Username' of table 'profiles' in db
+    c.execute(statement, (users,))
+
+    # if none of the users found
+    if len(c.fetchall()) == 0:
+        return 0
+
+    conn.commit()
+    return c.fetchall()
+    conn.close()
+
+
+##########################################################################################################
+# definition to add user matchmake profiles into db
+def adduserprofile(dictionaryofuserprofile):
+    '''
+    # define list for getting all field names (e.g. Name, Country, Acceptable_age ...)
+    listoffields = []
+    listofdata = []
+    Usernameofuser = ""
+    # try to connect (this action will create a .db file in same directory if it does not exist)
+    conn = sqlite3.connect('userprofiles.db')
+    # create cursor object, and assign it to variable called c
+    c = conn.cursor()
+
+    # for each element in the given dictionary
+    for a in dictionaryofuserprofile:
+        # check if user already exists:
+        exist = c.execute("SELECT * FROM profiles WHERE Username = (?)", (str(a),)).fetchall()
+
+        # if exist
+        if len(exist) > 0:
+            print 'exists'
+            return 2
+        # if does not exist
+        elif len(exist) == 0:
+            # for each field it has
+            for field in dictionaryofuserprofile[a]:
+                # append field names into listoffields, and data into listofdata (each data is a list)
+                listoffields.append(field)
+                listofdata.append(", ".join(dictionaryofuserprofile[a][field]))   # list of lists(data)
+
+                if str(field) == "Name":
+                    Usernameofuser = dictionaryofuserprofile[a][field]
+
+    listofdata.append(str(Usernameofuser[0]).replace("[", "").replace("]", ""))
+    print str(listofdata)
+
+    # linkup the list elements into string
+    fieldstring = ", ".join(listoffields)
+    fieldstring += ", Username"
+    print fieldstring
+
+    # defining string to store all data as a single string
+    datastring = ""
+    for i in range(0, len(listofdata)):
+        datastring += "(" + listofdata[i] + "), "
+    datastring += "(" + str(Usernameofuser).replace("['", "").replace("']", "") + ")"
+    print datastring
+
+    # insert data into db
+    c.executemany("INSERT INTO profiles (%s) VALUES (%s)", (fieldstring, listofdata,))
+
+
+    exit()
+
+'''
+##########################################################################################################
 ##########################################################################################################
 # definition to insert all user profile data into the 'userprofs' table
 def insert_profile(maindict):
-
     check_table_exists(maindict)
-    
+
     i = 0
     # Load each user profile separately and insert data into db.
     while i < len(maindict.items()):
@@ -182,7 +308,7 @@ def insert_profile(maindict):
         user_values_str = ""
         user_list = []
         # For each user, retrieve the data values and store into list.
-        for key,value in maindict[i].items():
+        for key, value in maindict[i].items():
             user_values_list.append(value)
         # For each element in list, append to a string to insert as db values later on.
         for item in user_values_list:
@@ -194,7 +320,7 @@ def insert_profile(maindict):
                         x = ""
                         """
             user_values_str += "\"%s\", " % item
-        
+
         user_values_str = user_values_str.strip()[:-1]
 
         # try to connect (this action will create a .db file in same directory if it does not exist)
@@ -224,7 +350,7 @@ def check_table_exists(maindict):
 
     # Append maindict keys as a list
     for p_key, profile in maindict.items():
-        for k,v in profile.items():
+        for k, v in profile.items():
             dict_key.append(k)
 
     # Declare table column names
@@ -252,13 +378,30 @@ def check_table_exists(maindict):
 
 
 ##########################################################################################################
+
+
+
 # main function for testing code purposes
 if __name__ == "__main__":
     # try to login with hardcoded username and password (below)
-    r = login("swaglord", "1g0t@BBC!")
+    #r = login("swaglord", "1g0t@BBC!")
 
     # add new user(s) manually through hardcoding
     addnewuser("swaglord","1g0t@BBC!")
     addnewuser("xiuqiho","password")
+    deleteuser("aaa")
+    #authenticateUser("xiuqiho","password")
 
+    tempdict = {'Teresa':{'Name': ['Teresa'],
+                           'Gender': ['F'],
+                           'Age': ['22'],
+                           'Dislikes': ['garlic', ' durian', ' swimming'],
+                           'Acceptable_age_range': ['18', '30'],
+                           'Acceptable_country': ['Singapore', ' China'],
+                           'Books': ['Total Truth: Liberating Christianity from its Cultural Captivity',
+                                'Reflections on the Psalms', 'Intercessory Prayer: How God Can Use Your Prayers to Move Heaven Earth',
+                                     "God 's Favor - Breath Of Heaven", 'Letters to Malcolm: Chiefly on Prayer'],
+                           'Likes': ['hotpot', ' chilli', ' chicken and chops', ' roses', ' movies'],
+                           'Country': ['Singapore']}}
+    adduserprofile(tempdict)
     viewusers()
