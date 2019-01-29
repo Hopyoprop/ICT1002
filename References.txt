@@ -1,2 +1,9 @@
 https://www.programiz.com/python-programming/nested-dictionary
-Test.
+
+# Consider Parameterised queries
+https://sebastianraschka.com/Articles/2014_sqlite_in_python_tutorial.html#security-and-injection-attacks
+https://stackoverflow.com/questions/1005552/sqlite-parameter-substitution-and-quotes
+http://keenhenry.me/python-sqlite-query-parameter-substitution
+https://www.btelligent.com/en/blog/best-practice-for-sql-statements-in-python/
+Basically, parameterised queries use '?'.
+To store one long string in db, can try to use r'string'
