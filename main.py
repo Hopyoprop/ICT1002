@@ -2,6 +2,7 @@ import Tkinter as tk
 import tkFileDialog as filedialog
 from function2 import processUser
 from function2 import printCountries
+from function3 import processInterest
 #from sqlfunctions import insert_profile, viewusers
 import sys
 
@@ -154,8 +155,8 @@ if __name__ == "__main__":
 
     printCountries(userdict, acceptedcountry)
     ##########################################################################################################
-    #Function 3
-    #TO DO
+    # Function 3
+    acceptedlikesdislikes = processInterest(userdict,acceptedcountry)
 
     ##########################################################################################################
     # once processing done, take dictionary/list of user input and compare with each dictionary of processed profile

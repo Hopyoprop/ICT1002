@@ -11,7 +11,7 @@ def createwindow(classofwindow, dimensions, titleofwindow):
 
     # defining Tk() instance
     main = tk.Tk()
-    main.resizable(False,False)
+    main.resizable(False, False)
     main.geometry(dimensions)
     main.title(titleofwindow)
     main.configure(background='lightblue')

@@ -29,6 +29,6 @@ def printCountries(userdict, acceptedcountry):
         name = "".join(acceptedcountry[i]['Name'])
         countryname = "".join(acceptedcountry[i]['Country'])
 
-        print "Profiles Accepted from Country Check: %s: %s" % (name, countryname)
+        print "Profiles Accepted from Country Check: %s from %s" % (name, countryname)
     if not acceptedcountry:
         print "No profiles found compatible!"
