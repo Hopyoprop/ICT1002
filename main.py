@@ -1,7 +1,8 @@
 import Tkinter as tk
 import tkFileDialog as filedialog
 from function2 import processUser
-from sqlfunctions import insert_profile, viewusers
+from function2 import printCountries
+#from sqlfunctions import insert_profile, viewusers
 import sys
 
 # Function will eventually return the keyed in data of the GUI.
@@ -129,9 +130,9 @@ if __name__ == "__main__":
     # Function to process data from all sample files into a dictionary
     maindict = processSamples(maindict)
 
-    # Insert user profiles into database
-    insert_userprofs = insert_profile(maindict)
-    viewusers()
+    #  Insert user profiles into database
+    # insert_userprofs = insert_profile(maindict)
+    # viewusers()
 
     # GUI to obtain user's profile and what is his profile
     # TO DO
@@ -151,14 +152,7 @@ if __name__ == "__main__":
     # First round of Processing for Acceptable Countries, returns a dict with accepted users
     acceptedcountry = processUser(userdict, maindict)
 
-    print "Accepted Countries from User Profile: %s" % (",".join(userdict['Acceptable_country']))
-    for i in acceptedcountry:
-        name = "".join(acceptedcountry[i]['Name'])
-        countryname = "".join(acceptedcountry[i]['Country'])
-
-        print "Profiles Accepted from Country Check: %s: %s" % (name, countryname)
-    if not acceptedcountry:
-        print "No profiles found compatible!"
+    printCountries(userdict, acceptedcountry)
     ##########################################################################################################
     #Function 3
     #TO DO
