@@ -156,7 +156,7 @@ if __name__ == "__main__":
     printCountries(userdict, acceptedcountry)
     ##########################################################################################################
     # Function 3
-    acceptedlikesdislikes = processInterest(userdict,acceptedcountry)
+    #acceptedlikesdislikes = processInterest(userdict,acceptedcountry)
 
     ##########################################################################################################
     # once processing done, take dictionary/list of user input and compare with each dictionary of processed profile

@@ -9,26 +9,25 @@ Yeo Han, Jordan
 '''
 
 def processUser(userdict, maindict):
-    profiledict = maindict  # Creating function copy of maindict as any modification here will modify maindict as well.
-    acceptedcountries = userdict['Acceptable_country'] # Obtain the user's Accepted Countries
+    profilelist = []  # Creating function copy of maindict as any modification here will modify maindict as well.
+    acceptedcountries = userdict['Acceptable_country']  # Obtain the user's Accepted Countries
     gender = userdict['Gender'][0][0]
 
-    for i in range(0, len(profiledict)):
-        list = "".join(profiledict[i]['Country']) #Obtain the profile's country of birth
-        checkgender = profiledict[i]['Gender'][0][0] # Obtain the Initial of the Gender
-
+    for i in range(0, len(maindict)):
+        list = "".join(maindict[i]['Country'])  # Obtain the profile's country of birth
+        checkgender = maindict[i]['Gender'][0][0]  # Obtain the Initial of the Gender
         # Perform check of both, opposite gender and if the profile is in acceptable country of user.
-        if not any(list in s for s in acceptedcountries) or not(checkgender != gender):
-            profiledict.pop(i) #Remove from maindict for further processing
+        if any(list in s for s in acceptedcountries) and not (checkgender == gender):
+            profilelist.append(maindict[i]['Name'])  # Remove from maindict for further processing
 
-    return profiledict
+    return profilelist
 
 def printCountries(userdict, acceptedcountry):
     print "Accepted Countries from User Profile: %s" % (",".join(userdict['Acceptable_country']))
     for i in acceptedcountry:
-        name = "".join(acceptedcountry[i]['Name'])
-        countryname = "".join(acceptedcountry[i]['Country'])
+        name = "".join(i)
+        # countryname = "".join(acceptedcountry[i]['Country'])
 
-        print "Profiles Accepted from Country Check: %s from %s" % (name, countryname)
+        print "Profiles Accepted from Country Check: %s from (To Obtain from SQL)" % name
     if not acceptedcountry:
         print "No profiles found compatible!"
