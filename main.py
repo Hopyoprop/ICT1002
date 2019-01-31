@@ -3,7 +3,7 @@ import tkFileDialog as filedialog
 from function2 import processUser
 from function2 import printCountries
 from function3 import processInterest
-from sqlfunctions import insert_profile, viewusers
+#from sqlfunctions import insert_profile, viewusers
 import sys
 
 # Function will eventually return the keyed in data of the GUI.
@@ -85,7 +85,7 @@ def parseCurrentLine(line, dcount):
         data = []
 
         # further split the contents based on delimiter of ","
-        content = content.strip().split(",")
+        content = filter(None, content.lstrip().rstrip().split(","))
         for a in content:
             data.append(a)
 
@@ -107,7 +107,7 @@ def parseAgeRange(line, dcount):
 
         data = []
         # further split the contents based on delimiter of "-"
-        content = content[:-1].strip().split('-')
+        content = content[:-1].lstrip(' ').rstrip(' ').split('-')
 
         # for each substring in content, add to a list
         for a in content:
@@ -132,8 +132,8 @@ if __name__ == "__main__":
     maindict = processSamples(maindict)
 
     # Insert user profiles into database
-    insert_userprofs = insert_profile(maindict)
-    viewusers()
+    # insert_userprofs = insert_profile(maindict)
+    # viewusers()
 
     # GUI to obtain user's profile and what is his profile
     # TO DO
@@ -156,7 +156,7 @@ if __name__ == "__main__":
     printCountries(userdict, acceptedcountry)
     ##########################################################################################################
     # Function 3
-    #acceptedlikesdislikes = processInterest(userdict,acceptedcountry)
+    acceptedlikesdislikes = processInterest(userdict, maindict)
 
     ##########################################################################################################
     # once processing done, take dictionary/list of user input and compare with each dictionary of processed profile
