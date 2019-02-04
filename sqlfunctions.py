@@ -314,15 +314,13 @@ def insert_profile(maindicti):
 
         # append once (this is assuming that 'Name' field is the first field)
         if str(key) == "Name":
-            user_values_list.append(str(maindicti[key]).replace("['","").replace("']", "") + ",")
+            user_values_list.append(str(maindicti[key]).replace("['","").replace("']",""))
 
         # for each item in list contained at current field
         for element in value:
             user_string += "%s," % element
 
-        #print user_string
-
-        # user_string = user_string[:-1]
+        user_string = user_string[:-1]
         user_values_list.append(user_string)
 
     # Convert list to tuple.
