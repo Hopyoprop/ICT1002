@@ -1,5 +1,0 @@
-<!-- NOTE: Strictly follow the format: #<table_name> - go to next line - <column_name_1 datatype,column_name_2 datatype> --!>
-#userprofs
-username varchar primary key,password varchar
-#profiles
-Username varchar primary key,Name varchar,Gender varchar,Country varchar,Acceptable_country varchar,Age varchar,Acceptable_age_range varchar,Likes varchar,Dislikes varchar,Books varchar

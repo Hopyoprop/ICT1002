@@ -3,28 +3,27 @@ import tkFileDialog as filedialog
 from function2 import processUser
 from function2 import printCountries
 from function3 import processInterest
-#from sqlfunctions import insert_profile, viewusers
-import sys
+from sqlfunctions import *
+from loginpage import *
+from displayprofilepage import *
+import globalvars as gv
 
-# Function will eventually return the keyed in data of the GUI.
-def openMainWindow():
-    #Return a dict of the main data.
-    return
-    ''' insert code for designing user input UI '''
 
 def processSamples(maindict):
 
     # Initialise count for parsing values into dictionary
     dcount = 0
 
-    #Initialise a GUI Object, not used yet.
-    mainwin = tk.Tk()
+    # purpose of defining this 'root' is so that file dialog box can be hidden
+    root = Tk()
+    root.withdraw()
+    tkmessagebox.showinfo("Input Data Files", "Please upload new profile files(if any) in the following prompt")
 
     # open file dialog browser to select files to parse
-    file_path = filedialog.askopenfilenames()
+    file_path = filedialog.askopenfilenames(parent=root)
 
-    # ^^^^^^^^^^^^^^^^^^^^^ remove once GUI is completed / not needed #
-    # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ #
+    #root.quit()
+    #root.destroy()
 
     # open files that were selected on top
     for path in file_path:
@@ -120,23 +119,59 @@ def parseAgeRange(line, dcount):
     return
 
 
-''' Main Function '''
-if __name__ == "__main__":
-    # Call function to instantiate GUI window tk() for user input
-    openMainWindow()
 
-    # Initialize variables
-    maindict = {}
+# definition to create a window
+def createwindow(classofwindow, dimensions, titleofwindow):
+    classofwindow(dimensions, titleofwindow)
+
+
+# definition to traverse the pages (keep the program alive and allow dynamic navigation of pages)
+def windowtraverser():
+    while str(gv.showpagecommand) is not "shutdown":
+        if str(gv.showpagecommand) == "openLoginPage":
+            createwindow(LoginPage, "500x300", "MatchMakeMe - Login")
+
+        elif str(gv.showpagecommand) == "openDisplayPage":
+            createwindow(DisplayPage, "500x800", "MatchMakeMe - My Profile")
+
+
+
+
+
+######################################################################################################################
+################################################ Main Function #######################################################
+######################################################################################################################
+
+if __name__ == "__main__":
+    ##########################################################################################################
+    # start up the GUI with loginpage
+    gv.init()
+    # call function to retrieve from a .txt file, which stores names of tables to create, and their column names
+    dbinfo = pull()
+    # call function to create the DB file with respective tables and names
+    createDBfile(dbinfo)
+
+    # create the login page, and launch it
+    createwindow(LoginPage, "500x300", "MatchMakeMe - Login")
+
+    ##########################################################################################################
+    # once login confirmed, come back to here (main.py) to execute processSamples() to let user add any new profiles
+    maindict = {}     # Initialize variables
 
     # Function to process data from all sample files into a dictionary
     maindict = processSamples(maindict)
 
-    # Insert user profiles into database
-    # insert_userprofs = insert_profile(maindict)
-    # viewusers()
+    # Loop each user profile separately and insert data into db.
+    i = 0
+    for i in range(0, len(maindict.items())):
+        insert_profile(maindict[i])
+        i+=1
 
-    # GUI to obtain user's profile and what is his profile
-    # TO DO
+    ##########################################################################################################
+    # Once adding of user profiles (any) into db, continue with the program
+    windowtraverser()
+
+
 
     ##########################################################################################################
     # Function 2

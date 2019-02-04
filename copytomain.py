@@ -57,6 +57,10 @@ if __name__ == "__main__":
     createDBfile(dbinfo)
 
     createwindow(LoginPage, "500x300", "MatchMakeMe - Login")
+
+
+
+
     windowtraverser()
     print "Program has successfully completed and shutdown!"
 

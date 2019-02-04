@@ -17,9 +17,33 @@ TITLE = ("Forte", 35)
 # definition for LoginPage frame, it will inherit a tk.Frame
 class LoginPage(tk.Frame):
     # parent is our parent class (in this case it is 'Head')
-    def __init__(self, parent):
+    def __init__(self, dimensions, titleofwindow):
+
+        main = tk.Tk()
+        main.resizable(False, False)
+        main.geometry(dimensions)
+        main.title(titleofwindow)
+        main.configure(background='lightblue')
+
+        # list to store input x and y dimensions of window
+        xANDy = dimensions.split("x")
+
+        # getting coordinates for center of screen, then set them using Tk.geometry
+        xposition = int(main.winfo_screenwidth() / 2 - int(xANDy[0]) / 2)
+        yposition = int(main.winfo_screenheight() / 2 - int(xANDy[1]) / 2)
+
+        # set the location of 'main'
+        main.geometry("+%d+%d" % (xposition, yposition))
+
+        # defining a frame to work on (display things on)
+        containerframe = tk.Frame(main)
+        containerframe.grid(row=0, column=0, sticky="nsew")
+
+
         # initializing the loginpage frame
-        tk.Frame.__init__(self, parent)
+        #tk.Frame.__init__(self, parent)
+
+
         # login button click event function
         def loginclick():
             logincode = login(usernamefieldentry.get(), passwordfieldentry.get())
@@ -39,13 +63,13 @@ class LoginPage(tk.Frame):
                 setpagetodisplay("openDisplayPage")
 
                 # quit here to go back to 'main.py'
-                self.quit()
-                self.destroy()
+                main.quit()
+                main.destroy()
 
 
             # if multiple records were found in the database (programming error)
             elif logincode == 2:
-                print "Unable to login - Database Error"
+                tkmessagebox.showerror("Database Error", "Unable to login - Database Error")
 
         def adduserclick():
             if usernamefieldentry.get() != "" and passwordfieldentry.get() != "":
@@ -78,14 +102,14 @@ class LoginPage(tk.Frame):
 
 
         # defining components of the UI
-        titleofapp = Label(text="MatchMakeMe", font=TITLE, background="lightblue")
-        titledesc = Label(text="for desperate people by desperate people", font=LARGE_FONT, background="lightblue")
-        usernamefieldlabel = Label(text="Username:", font=LARGE_FONT, background="lightblue")
-        passwordfieldlabel = Label(text="Password:", font=LARGE_FONT, background="lightblue")
-        usernamefieldentry = Entry(width=35, background="lightblue")
-        passwordfieldentry = Entry(width=35, background="lightblue")
-        loginbutton = Button(text="Login", font=LARGE_FONT, command=lambda: loginclick())
-        createaccountbutton = Button(text="Create Account", font=LARGE_FONT, command=lambda: adduserclick())
+        titleofapp = Label(main, text="MatchMakeMe", font=TITLE, background="lightblue")
+        titledesc = Label(main, text="for desperate people by desperate people", font=LARGE_FONT, background="lightblue")
+        usernamefieldlabel = Label(main, text="Username:", font=LARGE_FONT, background="lightblue")
+        passwordfieldlabel = Label(main, text="Password:", font=LARGE_FONT, background="lightblue")
+        usernamefieldentry = Entry(main, width=35, background="lightblue")
+        passwordfieldentry = Entry(main, width=35, background="lightblue")
+        loginbutton = Button(main, text="Login", font=LARGE_FONT, command=lambda: loginclick())
+        createaccountbutton = Button(main, text="Create Account", font=LARGE_FONT, command=lambda: adduserclick())
 
         titleofapp.place(x=90, y=40)
         titledesc.place(x=120, y=120)
@@ -95,6 +119,8 @@ class LoginPage(tk.Frame):
         passwordfieldentry.place(x=195, y=215)
         loginbutton.place(x=370, y=250)
         createaccountbutton.place(x=220, y=250)
+
+        main.mainloop()
 
 
 #######################################################################################################################

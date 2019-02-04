@@ -1,6 +1,6 @@
 import sqlite3
 import os.path
-
+import time
 
 ##########################################################################################################
 # definition to check if it is the first time Application is running / if 'userprofiles.db' exists
@@ -46,7 +46,7 @@ def pull():
         # call function to read the file
         dictionaryFromFileContents = read()
 
-        # return the dictionary to function 'InitializeDBconnection()'
+        # return the dictionary
         return dictionaryFromFileContents
 
     # else if the 'dbinfo.txt' file exists, read from it
@@ -159,6 +159,7 @@ def addnewuser(username, password):
         return 1
 
     except:
+        print "In exit"
         return 0
 
     # close the connection
@@ -298,50 +299,55 @@ def adduserprofile(dictionaryofuserprofile):
 ##########################################################################################################
 ##########################################################################################################
 # definition to insert all user profile data into the 'userprofs' table
-def insert_profile(maindict):
+def insert_profile(maindicti):
 
     # Before inserting data, check if db table exists. If not, create one.
-    check_table_exists(maindict)
+    # check_table_exists(maindicti)
 
-    # Loop each user profile separately and insert data into db.
-    i = 0
-    while i < len(maindict.items()):
-        user_values_list = []
+    user_values_list = []
 
-        # For each user (type: <dict>), retrieve the data values (type: <list>).
-        # Iterate through key's values (type: <string>) and append to a string.
-        # Append each string for that user to a list.
-        for key, value in maindict[i].items():
-            user_string = ""
-            for element in value:
-                user_string += "%s," % element
-            user_string = user_string[:-1]
-            user_values_list.append(user_string)
+    # For each user (type: <dict>), retrieve the data values (type: <list>).
+    # Iterate through key's values (type: <string>) and append to a string.
+    # Append each string for that user to a list.
+    for key, value in maindicti.items():
+        user_string = ""
 
-        # Convert list to tuple.
-        user_values_tuple = tuple(user_values_list)
+        # append once (this is assuming that 'Name' field is the first field)
+        if str(key) == "Name":
+            user_values_list.append(str(maindicti[key]).replace("['","").replace("']", "") + ",")
 
-        # try to connect (this action will create a .db file in same directory if it does not exist)
-        conn = sqlite3.connect('userprofiles.db')
-        # create cursor object, and assign it to variable called c
-        c = conn.cursor()
+        # for each item in list contained at current field
+        for element in value:
+            user_string += "%s," % element
 
-        # Insert user data into userprofs.
-        table = "userprofs"
-        c.execute("""INSERT OR IGNORE INTO {:} VALUES (?,?,?,?,?,?,?,?,?)""".format(table), (user_values_tuple))
+        #print user_string
 
-        # commit changes (instructions given to the cursor)
-        conn.commit()
-        # close the connection
-        conn.close()
+        # user_string = user_string[:-1]
+        user_values_list.append(user_string)
 
-        i += 1
+    # Convert list to tuple.
+    user_values_tuple = tuple(user_values_list)
 
-    return maindict
+    # try to connect (this action will create a .db file in same directory if it does not exist)
+    conn = sqlite3.connect('userprofiles.db')
+    # create cursor object, and assign it to variable called c
+    c = conn.cursor()
+
+    # Insert user data into userprofs.
+    table = "profiles"
+
+    command = """INSERT OR IGNORE INTO %s VALUES """ % table
+    # execute insert statement using the obtained tuple into the 'profiles' table
+    c.execute(command+"(?,?,?,?,?,?,?,?,?,?)", (user_values_tuple))
+    # commit changes (instructions given to the cursor)
+    conn.commit()
+    # close the connection
+    conn.close()
+
 
 
 ##########################################################################################################
-# definition to check if 'userprofs' table exists. If not, create table.
+# definition to check if 'profiles' table exists. If not, create table.
 def check_table_exists(maindict):
     dict_key = []
     column_names = ""
@@ -367,7 +373,7 @@ def check_table_exists(maindict):
     c = conn.cursor()
 
     # create a table with its respective column names
-    table = "userprofs"
+    table = "profiles"
     c.execute("""CREATE TABLE IF NOT EXISTS {:} ({:})""".format(table,column_names))
 
     # commit changes (instructions given to the cursor)
