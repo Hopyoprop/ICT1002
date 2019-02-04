@@ -336,14 +336,14 @@ def insert_profile(maindicti):
     # Insert user data into userprofs.
     table = "profiles"
 
-    command = """INSERT OR IGNORE INTO %s VALUES """ % table
     # execute insert statement using the obtained tuple into the 'profiles' table
-    c.execute(command+"(?,?,?,?,?,?,?,?,?,?)", (user_values_tuple))
+    #command = """INSERT OR IGNORE INTO %s VALUES """ % table
+    #c.execute(command+"(?,?,?,?,?,?,?,?,?,?)", (user_values_tuple))
+    c.execute("""INSERT OR IGNORE INTO %s (Username, Name, Gender, Age, Dislikes, Acceptable_age_range, Acceptable_country, Books, Likes, Country) VALUES (?,?,?,?,?,?,?,?,?,?)""" % table, (user_values_tuple))
     # commit changes (instructions given to the cursor)
     conn.commit()
     # close the connection
     conn.close()
-
 
 
 ##########################################################################################################
