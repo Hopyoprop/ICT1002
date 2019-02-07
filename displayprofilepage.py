@@ -89,8 +89,8 @@ class DisplayPage(tk.Frame):
         findmatchbutton = Button(main,text="Find Match!", font=LARGE_FONT, command=lambda: findmatch())
 
         welcomelabel.pack(fill=X)
-        updatebutton.place(x=250, y=750)
-        findmatchbutton.place(x=400, y=750)
+        updatebutton.place(x=250, y=650)
+        findmatchbutton.place(x=400, y=650)
 
         main.mainloop()
 

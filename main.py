@@ -133,7 +133,7 @@ def windowtraverser():
             createwindow(LoginPage, "500x300", "MatchMakeMe - Login")
 
         elif str(gv.showpagecommand) == "openDisplayPage":
-            createwindow(DisplayPage, "500x800", "MatchMakeMe - My Profile")
+            createwindow(DisplayPage, "500x700", "MatchMakeMe - My Profile")
 
 
 
