@@ -3,6 +3,7 @@ import tkFileDialog as filedialog
 from function2 import processUser
 from function2 import printCountries
 from function3 import processInterest
+from function4 import processBook
 from sqlfunctions import *
 from loginpage import *
 from displayprofilepage import *
@@ -145,14 +146,14 @@ def windowtraverser():
 if __name__ == "__main__":
     ##########################################################################################################
     # start up the GUI with loginpage
-    gv.init()
+    #gv.init() #uncomment
     # call function to retrieve from a .txt file, which stores names of tables to create, and their column names
-    dbinfo = pull()
+    #dbinfo = pull()
     # call function to create the DB file with respective tables and names
-    createDBfile(dbinfo)
+    #createDBfile(dbinfo)
 
     # create the login page, and launch it
-    createwindow(LoginPage, "500x300", "MatchMakeMe - Login")
+    #createwindow(LoginPage, "500x300", "MatchMakeMe - Login")
 
     ##########################################################################################################
     # once login confirmed, come back to here (main.py) to execute processSamples() to let user add any new profiles
@@ -169,7 +170,7 @@ if __name__ == "__main__":
 
     ##########################################################################################################
     # Once adding of user profiles (any) into db, continue with the program
-    windowtraverser()
+    # windowtraverser() #uncomment
 
 
 
@@ -192,7 +193,11 @@ if __name__ == "__main__":
     ##########################################################################################################
     # Function 3
     acceptedlikesdislikes = processInterest(userdict, maindict)
-
+    
+    ##########################################################################################################
+    # Function 4
+    acceptedbooks = processBook(userdict, maindict)
+    print(acceptedbooks)
     ##########################################################################################################
     # once processing done, take dictionary/list of user input and compare with each dictionary of processed profile
     # DTF_Match()
@@ -210,6 +215,11 @@ if __name__ == "__main__":
 
     # Output to a CSV File
     # TO DO
+
+    #func 4 data
+    #{'Angela Little': 40, 'Joel Jackson': 10, 'Rose': 0, 'Jenny Wang': 130, 'Teresa': 30, 'Lisa Marie': 50, 'Carol': 40, 'Shelley': 0, 'Kevin': 0, 'Michael Jackson': 130}
+
+	
 
 
 
