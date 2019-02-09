@@ -3,6 +3,7 @@ import tkFileDialog as filedialog
 from function2 import processUser
 from function2 import printCountries
 from function3 import processInterest
+from function3 import printLikesDislikes
 from function4 import processBook
 from function5 import processMatches
 from sqlfunctions import *
@@ -194,7 +195,8 @@ if __name__ == "__main__":
     ##########################################################################################################
     # Function 3
     acceptedlikesdislikes = processInterest(userdict, maindict)
-    print acceptedlikesdislikes
+
+    printLikesDislikes(acceptedlikesdislikes)
     ##########################################################################################################
     # Function 4
     acceptedbooks = processBook(userdict, maindict)

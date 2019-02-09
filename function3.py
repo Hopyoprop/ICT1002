@@ -12,12 +12,21 @@ def processInterest(userdict, maindict):
     profiledict = maindict  # Creating function copy of maindict as any modification here will modify maindict as well.
     userlikes = userdict['Likes']
     userdislikes = userdict['Dislikes']
+    gender = userdict['Gender'][0][0]
+    age = userdict['Acceptable_age_range']
     profilepoints = {}
 
     for i in profiledict:
         currentuserpoints = 0
         profilelikes = profiledict[i]['Likes']
         profiledislikes = profiledict[i]['Dislikes']
+        checkgender = maindict[i]['Gender'][0][0]  # Obtain the Initial of the Gender
+        checkage = maindict[i]['Age']
+
+        # Gender check and Age check for if current profile is correct gender and inside acceptable age of user.
+        if (checkgender == gender) or not(checkage == a for a in range(int(age[0]), int(age[1]) + 1)):
+            continue
+
         # print userlikes, profilelikes,userdislikes, profiledislikes
         # Run through check for User Likes
         for L1 in userlikes:
@@ -42,3 +51,12 @@ def processInterest(userdict, maindict):
                     currentuserpoints -= 20
         profilepoints[str("".join(profiledict[i]['Name']))] = currentuserpoints
     return profilepoints
+
+
+def printLikesDislikes(profilepoints):
+    for i in profilepoints:
+        name = "".join(i)
+
+        print "Profiles Accepted from Likes Dislikes Check: %s from (To Obtain from SQL)" % name
+    if not profilepoints:
+        print "No profiles found compatible for Likes and Dislikes!"

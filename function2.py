@@ -34,4 +34,4 @@ def printCountries(userdict, acceptedcountry):
 
         print "Profiles Accepted from Country Check: %s from (To Obtain from SQL)" % name
     if not acceptedcountry:
-        print "No profiles found compatible!"
+        print "No profiles found compatible for acceptable country!"
