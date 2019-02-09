@@ -12,12 +12,16 @@ def processUser(userdict, maindict):
     profilelist = []  # Creating function copy of maindict as any modification here will modify maindict as well.
     acceptedcountries = userdict['Acceptable_country']  # Obtain the user's Accepted Countries
     gender = userdict['Gender'][0][0]
+    age = userdict['Acceptable_age_range']
 
     for i in range(0, len(maindict)):
         list = "".join(maindict[i]['Country'])  # Obtain the profile's country of birth
         checkgender = maindict[i]['Gender'][0][0]  # Obtain the Initial of the Gender
+        checkage = maindict[i]['Age']
+
         # Perform check of both, opposite gender and if the profile is in acceptable country of user.
-        if any(list in s for s in acceptedcountries) and not (checkgender == gender):
+        if any(list in s for s in acceptedcountries) and not (checkgender == gender)\
+                and (checkage == a for a in range(int(age[0]), int(age[1])+1)):
             profilelist.append(maindict[i]['Name'])  # Remove from maindict for further processing
 
     return profilelist
