@@ -99,6 +99,6 @@ def processBook(userdict, maindict):
                 currentuserpoints = (len(same_values)*10)#profile's points
                 #print(str(profiledict[i]['Name'])+"'s Current Pts : ", currentuserpoints)
                 profilepoints[str("".join(profiledict[i]['Name']))] = currentuserpoints
-        print(profilepoints)
+        return(profilepoints)
 	#print("~~~~~~~~~~ End Potential Match Books ")
 

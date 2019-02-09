@@ -41,4 +41,4 @@ def processInterest(userdict, maindict):
                 if L2.lstrip(' ') in D1.lstrip(' '):
                     currentuserpoints -= 20
         profilepoints[str("".join(profiledict[i]['Name']))] = currentuserpoints
-    print profilepoints
+    return profilepoints
