@@ -198,6 +198,12 @@ if __name__ == "__main__":
     # Function 4
     acceptedbooks = processBook(userdict, maindict)
     print(acceptedbooks)
+
+    ##########################################################################################################
+    # Function 5
+    bestMatched = processMatches(acceptedcountry, acceptedlikesdislikes, acceptedbooks, userdict, maindict)
+    print(bestMatched)
+
     ##########################################################################################################
     # once processing done, take dictionary/list of user input and compare with each dictionary of processed profile
     # DTF_Match()

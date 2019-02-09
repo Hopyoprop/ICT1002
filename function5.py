@@ -24,7 +24,7 @@ Yeo Han, Jordan
 	4a. If it has values, move to (5).
 	4b. Else, print("There are no matches available for you at the moment.\nPlease try again later.")
 
-5. Sort newDict by values and return the top 3 usernames with the highest values.
+5. Sort newDict by values and return the top 3 usernames with the highest points values.
 	5a. If same values, take the username nearest to age.
 """
 def processAgeRange(userdict, maindict):
@@ -33,58 +33,137 @@ def processAgeRange(userdict, maindict):
 	# Return list
 	return True
 
-def addMatches(acceptedcountry, likesdislikes, books):
+
+def processMatches(acceptedcountry, likesdislikes, books, userdict, maindict):
 	country = []
-	for c in acceptedcountry:
+	for c in acceptedcountry:								# Formatting for acceptedcountry list.
 		country.append("".join(c))
+	
 	matched = {}
+	for i in country:										# For user's acceptedcountry:
+		if i in likesdislikes:								#2. Check if users in acceptedcountry exists in acceptedlikesdislikes.
+			matched[i] = likesdislikes.get(i)				# If exists, append key:value to newDict. Else, move to (4).
+			if i in books:									#3. Check if users in (2) exists in acceptedbooks.
+				matched[i] += books.get(i)					# If exists, add value to respective key in newDict. Else, move to (4).
 
-	for i in country:
-		if i in likesdislikes:
-			matched[i] = likesdislikes.get(i)
-			if i in books:
-				matched[i] += books.get(i)
-
-	if bool(matched):
-			top_3 = bestMatched(matched)
+	if bool(matched):										#4. Check if newDict has keys:values.
+			top_3 = bestMatched(matched,userdict,maindict)	# If it has values, return bestMatched()
 			return top_3
-	else:
-		print("There are no matches available for you at the moment.\nPlease try again later.")
+	else:													# Else, return empty dictionary
+		print("There are no matches available for you at the moment. Please try again later.")
+		return {}
 
-def bestMatched(matched_dict):
-	best_matched = []
-	for name,points in sorted(matched_dict.iteritems(), key=lambda (k,v): (v,k)):
-		best_matched.append(name)
-	reverse = list(reversed(best_matched))
 
-	sorted_match = sortMatches(reverse)
+def bestMatched(matched_dict,userdict,maindict):
+	best_matched_names = []
+	best_matched_points = []
+	for name,points in sorted(matched_dict.iteritems(), key=lambda (k,v): (v,k), reverse=True):	# Sort dict by values in desc order with Lambda
+		best_matched_names.append(name)
+		best_matched_points.append(points)
+
+	#Scenario: Top 5 matches might have the same points/values.
+	#Objective: For those with same points, sort by abs() between user's age and maindict's avg age range.
+	sorted_match = sortMatches(best_matched_names,best_matched_points,userdict,maindict)
+
 	return sorted_match[:3]
 
-def sortMatches(matched_dict):
+
+def sortMatches(namelist,pointslist,userdict,maindict):
 	"""
-	1. Given matched_dict<name:points>, create namelist[names] & pointslist[points].
-	2. Check if first points is same as second.
-		2a. If yes, check if first points is same as third. Repeat.
+	1. Given namelist & pointslist.
+	2. Check if pointslist[0] == pointslist[i].
+		2a. If yes, check if pointslist[0] == pointslist[i++]. Repeat.
 		2b. If no, store the index number.
+			2bi. Check if pointslist[i++] == pointslist[(i++1)]
 		2c. Slice list and push to ageChecker().
-	3. Check if second points is same as fourth.
+		2d. ageChecker() returns same list of names, but sorted by abs() between user's age and maindict's avg age range.
+	"""	
+	x = 0		# Set index to 0
+	y = 1		# Set index to 1
+	z = 1		# Set index to 1
+	count = 0																	# Iterate pointslist and check if first index
+	while count < len(pointslist):												#  is same as second index, then third index, etc. 
+		if x < len(pointslist) and pointslist[0] == pointslist[x]:
+			x += 1
+		elif x+y < len(pointslist) and pointslist[x] == pointslist[x+y]:
+			y += 1
+		elif x+y+z < len(pointslist) and pointslist[x+y] == pointslist[x+y+z]:
+			z += 1
+		else:
+			break
+		count += 1
+		
+	sliced_list1 = namelist[0:x]		# Group values of unique first index.
+	sliced_list2 = namelist[x:x+y]		# Group values of unique second index.
+	sliced_list3 = namelist[x+y:x+y+z]	# Group values of unique third index.
 
-	2. for p in pointslist:
-			if p == pointslist[i]:
-				i++
-			else:
-				break
-		sliced_list = namelist[0,i]
-		ageChecker(namelist)
+	if len(sliced_list1) > 1:									# If there is more than 1 count of first index,
+		names1 = ageChecker(sliced_list1,userdict,maindict)		# Call ageChecker() and sort names by abs() between user's age and maindict's avg age range.
+		if len(names1) <= 3 and len(sliced_list2) == 1:			# If first index count is not more than 3 and second index count has only 1,
+			for i in sliced_list2:
+				names1.append(i)								# Append names of of second index count to names of first index count.
+		elif len(names1) <= 3 and len(sliced_list2) > 1:		# Elif first index count is not more than 3 and second index count is more than 1,
+			names2 = ageChecker(sliced_list2,userdict,maindict)	# Call ageChecker() and sort names by abs() between user's age and maindict's avg age range.
+			for i in names2:
+				names1.append(i)								# Append names of of second index count to names of first index count.
+			#DONE
+	
+	elif len(sliced_list2) > 1:									# Elif there is more than 1 count of second index,
+		names1 = ageChecker(sliced_list1,userdict,maindict)		# Call ageChecker() and sort names by abs() between user's age and
+		names2 = ageChecker(sliced_list2,userdict,maindict)		#  maindict's avg age range individually for first and second index.
+		for i in names2:
+			names1.append(i)									# Append names of of second index count to names of first index count.
+		#DONE
 
-		ageChecker:
+	elif len(sliced_list3) > 1:									# Elif there is more than 1 count of third index,
+		names1 = ageChecker(sliced_list1,userdict,maindict)		# Call ageChecker() and sort names by abs() between user's age
+		names2 = ageChecker(sliced_list2,userdict,maindict)		#  and maindict's avg age range individually for first, second
+		names3 = ageChecker(sliced_list3,userdict,maindict)		#  and third index.
+		for i in names2:
+			names1.append(i)									# Append names of of second index count to names of first index count.
+		for i in names3:
+			names1.append(i)									# Append names of of third index count to names of first index count.
+		#DONE
 
-	"""
-	return matched_dict
+	else:														# If no requirements are fulfilled, means that all points values
+		return sliced_list1+sliced_list2+sliced_list3			#  are unique. Thus, return only 3 values.
+
+	return names1												# Return appended list of first index count.
+	
+
+def ageChecker(namelist,userdict,maindict):
+	abs_age_dict = {}
+	abs_age_list = []
+	acceptedAge = userdict["Acceptable_age_range"]	# Retrieve the accepted_age_range from user.
+	minAge = int(acceptedAge[0])					# Store minimum accepted age.
+	maxAge = int(acceptedAge[1])					# Store maximum accepted age.
+	
+	for i in namelist:												# For each name in namelist,
+		for index,main in maindict.iteritems():
+			if i in main["Name"]:									# Compare between matched name (namelist) and maindict name.
+				checkAge = int("".join(main["Age"]))				#  Find out maindict age.
+				acceptable_range_avg = abs(maxAge+minAge) / 2		#  Find out acceptable_age_range of user.
+				abs_age_apart = abs(checkAge-acceptable_range_avg)	#  Find out what is their absolute difference.
+				abs_age_list.append(abs_age_apart)					#  Append to list.
+	
+	counter = 0
+	for i in namelist:							# For each name in namelist,
+		abs_age_dict[i] = abs_age_list[counter]	#  Append name:abs_difference to dictionary. This could be in unsorted order.
+		counter += 1
+
+	sorted_name_list = []
+	sorted_age_list = []
+	for name,age in sorted(abs_age_dict.iteritems(), key=lambda (k,v): (v,k)):	# Sort dict by values in asce order with Lambda
+		sorted_name_list.append(name)
+		sorted_age_list.append(age)
+	
+	return sorted_name_list
 
 
+"""
 if __name__ == "__main__":
 	c = [['Jenny Wang'], ['Rose'], ['Shelley'],['Angela Little']]
 	l = {'Rose': 20, 'Jenny Wang': 35, 'Joel Jackson': 220, 'Shelley': 50, 'Angela Little': 30}
 	b = {'Angela Little': 40, 'Joel Jackson': 10, 'Rose': 0, 'Jenny Wang': 130, 'Teresa': 30, 'Lisa Marie': 50, 'Carol': 40, 'Shelley': 0, 'Kevin': 0, 'Michael Jackson': 130}
-	print(addMatches(c,l,b))
+	print(addMatches(c,l,b,u,m))
+	"""
