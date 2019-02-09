@@ -17,11 +17,14 @@ def processUser(userdict, maindict):
     for i in range(0, len(maindict)):
         list = "".join(maindict[i]['Country'])  # Obtain the profile's country of birth
         checkgender = maindict[i]['Gender'][0][0]  # Obtain the Initial of the Gender
-        checkage = maindict[i]['Age']
+        checkage = int("".join(maindict[i]['Age']))
+        print age, checkage
+        # Gender check and Age check for if current profile is correct gender and inside acceptable age of user.
+        if (checkgender == gender) or not(int(age[0]) <= int(checkage) <= int(age[1])):
+            continue
 
         # Perform check of both, opposite gender and if the profile is in acceptable country of user.
-        if any(list in s for s in acceptedcountries) and not (checkgender == gender)\
-                and (checkage == a for a in range(int(age[0]), int(age[1])+1)):
+        elif any(list in s for s in acceptedcountries):
             profilelist.append(maindict[i]['Name'])  # Remove from maindict for further processing
 
     return profilelist

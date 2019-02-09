@@ -21,10 +21,10 @@ def processInterest(userdict, maindict):
         profilelikes = profiledict[i]['Likes']
         profiledislikes = profiledict[i]['Dislikes']
         checkgender = maindict[i]['Gender'][0][0]  # Obtain the Initial of the Gender
-        checkage = maindict[i]['Age']
+        checkage = int("".join(maindict[i]['Age']))
 
         # Gender check and Age check for if current profile is correct gender and inside acceptable age of user.
-        if (checkgender == gender) or not(checkage == a for a in range(int(age[0]), int(age[1]) + 1)):
+        if (checkgender == gender) or not(int(age[0]) <= int(checkage) <= int(age[1])):
             continue
 
         # print userlikes, profilelikes,userdislikes, profiledislikes
