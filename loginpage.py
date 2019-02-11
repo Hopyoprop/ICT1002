@@ -107,7 +107,7 @@ class LoginPage(tk.Frame):
         usernamefieldlabel = Label(main, text="Username:", font=LARGE_FONT, background="lightblue")
         passwordfieldlabel = Label(main, text="Password:", font=LARGE_FONT, background="lightblue")
         usernamefieldentry = Entry(main, width=35, background="lightblue")
-        passwordfieldentry = Entry(main, width=35, background="lightblue")
+        passwordfieldentry = Entry(main, width=35, background="lightblue", show="*")
         loginbutton = Button(main, text="Login", font=LARGE_FONT, command=lambda: loginclick())
         createaccountbutton = Button(main, text="Create Account", font=LARGE_FONT, command=lambda: adduserclick())
 
