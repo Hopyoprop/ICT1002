@@ -3,7 +3,7 @@ import Tkinter as tk
 import tkMessageBox as tkmessagebox
 import re
 from sqlfunctions import *
-from copytomain import *
+from main import *
 from globalvars import *
 
 
@@ -24,6 +24,7 @@ class LoginPage(tk.Frame):
         main.geometry(dimensions)
         main.title(titleofwindow)
         main.configure(background='lightblue')
+        main.protocol("WM_DELETE_WINDOW", lambda: destroywindow())
 
         # list to store input x and y dimensions of window
         xANDy = dimensions.split("x")
@@ -101,6 +102,11 @@ class LoginPage(tk.Frame):
                                                     "and don't leave fields blank")
 
 
+        def destroywindow():
+            main.quit()
+            main.destroy()
+            exit()
+
         # defining components of the UI
         titleofapp = Label(main, text="MatchMakeMe", font=TITLE, background="lightblue")
         titledesc = Label(main, text="for desperate people by desperate people", font=LARGE_FONT, background="lightblue")
@@ -126,8 +132,6 @@ class LoginPage(tk.Frame):
 #######################################################################################################################
 #######################################################################################################################
 
+# main function for testing code, not for production use
 if __name__ == "__main__":
-    main = tk.Tk()
-    cont = tk.Frame()
-    LoginPage(cont)
-    main.mainloop()
+    LoginPage("500x300", "MatchMakeMe - Login")

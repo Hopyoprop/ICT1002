@@ -212,90 +212,142 @@ def getlistofcolumns(table_name):
     # pragma the specified sql table for its column names
     c.execute("PRAGMA table_info(%s)" % table_name)
     columnnames = (str(a[1]) for a in c.fetchall())
-    #print "Pragma results:\n" + " ".join(columnnames)
+
     conn.commit()
     conn.close()
-    return columnnames
+
+    columns=[]
+    for col in columnnames:
+        columns.append(str(col))
+
+    return columns
 
 ##########################################################################################################
 # definition to get dictionaries of specified users' profile
 def getuserprofiles(listofuserstofind):
     # try to connect (this action will create a .db file in same directory if it does not exist)
     conn = sqlite3.connect('userprofiles.db')
+
     # create cursor object, and assign it to variable called c
     c = conn.cursor()
 
     # concatenate all usernames in 'listofusertofind' into a single string
     users = str(", ".join(listofuserstofind))
-    print str(users)
+    #print str(users)
+
     statement = "SELECT * FROM profiles WHERE Username in (?)"
     # get all records from db where any specified username matches a record in 'Username' of table 'profiles' in db
     c.execute(statement, (users,))
+    fetchedrecords = c.fetchall()
 
+    listofuserdata = []
     # if none of the users found
-    if len(c.fetchall()) == 0:
+    if len(fetchedrecords) == 0:
         return 0
-
+    else:
+        for record in fetchedrecords:
+            for indexval in record:
+                listofuserdata.append(str(indexval))
     conn.commit()
-    return c.fetchall()
     conn.close()
+
+    return listofuserdata
 
 
 ##########################################################################################################
+# definition to retrieve all records in db and return as a dictionary
+def createmaindictionary():
+    # try to connect (this action will create a .db file in same directory if it does not exist)
+    conn = sqlite3.connect('userprofiles.db')
+
+    # create cursor object, and assign it to variable called c
+    c = conn.cursor()
+
+    c.execute("SELECT * FROM profiles")
+    fetchedrecords  = c.fetchall()
+
+    maindictionary = {}
+
+    # call function to get list of column names for the profiles table, then slice away the first field (primary key)
+    listofcolumns = getlistofcolumns('profiles')
+    listofcolumns = listofcolumns[1:]
+
+    # if no records - worst case scenario
+    if len(fetchedrecords) == 0:
+        return 0
+    # else when records are found
+    else:
+        dcount = 0
+        for record in fetchedrecords:
+            # get the name of user of current record
+            #nameofuser = record[1]
+            #nameofuser = str(nameofuser).replace("u'","'")
+
+            # slice the record (remove first field which represents the primary key 'Username')
+            temprecordlist = record[1:]
+
+            # create the dictionary entry for current user
+            maindictionary[dcount] = {}
+
+            # for each column, add the column name as a sub-dictionary and the field data as a list into the maindictioanry
+            for index in range(0, len(listofcolumns)):
+                maindictionary[dcount][str(listofcolumns[index])] = {}
+                # initialize list, dump the string (data of specific column) into it, so that we can add it into
+                # sub-dictionary as a list
+
+                tempfieldlist = []
+                # split them nicely and add each substring separated by a ',' as  an element in the sublist
+                temp = str(temprecordlist[index]).split(",")
+                tt = []
+                # for each substring
+                for t in temp:
+                    # remove all spaces infront of the substring
+                    while str(t).startswith(" "):
+                        t=str(t)[1:]
+                    # remove all spaces behind the substring
+                    while str(t).endswith(" "):
+                        t = str(t)[:len(str(t))-1]
+                    tt.append(str(t))
+
+
+                tempfieldlist.append(temp)
+
+                # assign the list to the particular field representing a specific column of the table
+                maindictionary[dcount][str(listofcolumns[index])] = tt
+
+            dcount+=1  #  increment counter by 1
+
+    conn.commit()
+    conn.close()
+
+    return maindictionary
+
+##########################################################################################################
 # definition to add user matchmake profiles into db
-def adduserprofile(dictionaryofuserprofile):
-    '''
-    # define list for getting all field names (e.g. Name, Country, Acceptable_age ...)
-    listoffields = []
-    listofdata = []
-    Usernameofuser = ""
+def adduserprofile(profiledatainlist):
+    tuplevalues = tuple(profiledatainlist)
+
     # try to connect (this action will create a .db file in same directory if it does not exist)
     conn = sqlite3.connect('userprofiles.db')
     # create cursor object, and assign it to variable called c
     c = conn.cursor()
 
-    # for each element in the given dictionary
-    for a in dictionaryofuserprofile:
-        # check if user already exists:
-        exist = c.execute("SELECT * FROM profiles WHERE Username = (?)", (str(a),)).fetchall()
+    # Insert user data into userprofs.
+    table = "profiles"
 
-        # if exist
-        if len(exist) > 0:
-            print 'exists'
-            return 2
-        # if does not exist
-        elif len(exist) == 0:
-            # for each field it has
-            for field in dictionaryofuserprofile[a]:
-                # append field names into listoffields, and data into listofdata (each data is a list)
-                listoffields.append(field)
-                listofdata.append(", ".join(dictionaryofuserprofile[a][field]))   # list of lists(data)
+    # execute insert statement using the obtained tuple into the 'profiles' table
+    try:
+        c.execute(
+            """INSERT OR REPLACE INTO %s (Username, Name, Gender, Country, Acceptable_country, Age, Acceptable_age_range, Likes, Dislikes, Books) VALUES (?,?,?,?,?,?,?,?,?,?)""" % table,
+            (tuplevalues))
+        # commit changes (instructions given to the cursor)
+        conn.commit()
+        # close the connection
+        conn.close()
+        return 1
+    except:
+        return 0
 
-                if str(field) == "Name":
-                    Usernameofuser = dictionaryofuserprofile[a][field]
-
-    listofdata.append(str(Usernameofuser[0]).replace("[", "").replace("]", ""))
-    print str(listofdata)
-
-    # linkup the list elements into string
-    fieldstring = ", ".join(listoffields)
-    fieldstring += ", Username"
-    print fieldstring
-
-    # defining string to store all data as a single string
-    datastring = ""
-    for i in range(0, len(listofdata)):
-        datastring += "(" + listofdata[i] + "), "
-    datastring += "(" + str(Usernameofuser).replace("['", "").replace("']", "") + ")"
-    print datastring
-
-    # insert data into db
-    c.executemany("INSERT INTO profiles (%s) VALUES (%s)", (fieldstring, listofdata,))
-
-
-    exit()
-
-'''
 ##########################################################################################################
 ##########################################################################################################
 # definition to insert all user profile data into the 'userprofs' table
@@ -389,12 +441,12 @@ if __name__ == "__main__":
     #r = login("swaglord", "1g0t@BBC!")
 
     # add new user(s) manually through hardcoding
-    addnewuser("swaglord","1g0t@BBC!")
-    addnewuser("xiuqiho","password")
-    deleteuser("aaa")
+    #addnewuser("swaglord","1g0t@BBC!")
+    #addnewuser("xiuqiho","password")
+    #deleteuser("aaa")
     #authenticateUser("xiuqiho","password")
 
-    tempdict = {'Teresa':{'Name': ['Teresa'],
+    '''tempdict = {'Teresa':{'Name': ['Teresa'],
                            'Gender': ['F'],
                            'Age': ['22'],
                            'Dislikes': ['garlic', ' durian', ' swimming'],
@@ -406,4 +458,9 @@ if __name__ == "__main__":
                            'Likes': ['hotpot', ' chilli', ' chicken and chops', ' roses', ' movies'],
                            'Country': ['Singapore']}}
     adduserprofile(tempdict)
-    viewusers()
+    viewusers()'''
+    #print getlistofcolumns('profiles')
+
+    result = createmaindictionary()
+
+

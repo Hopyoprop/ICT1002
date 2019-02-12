@@ -38,37 +38,65 @@ def processMatches(acceptedcountry, likesdislikes, books, userdict, maindict):
 	country = []
 	for c in acceptedcountry:								# Formatting for acceptedcountry list.
 		country.append("".join(c))
-	
-	matched = {}
-	for i in country:										# For user's acceptedcountry:
-		if i in likesdislikes:								#2. Check if users in acceptedcountry exists in acceptedlikesdislikes.
-			matched[i] = likesdislikes.get(i)				# If exists, append key:value to newDict. Else, move to (4).
-			if i in books:									#3. Check if users in (2) exists in acceptedbooks.
-				matched[i] += books.get(i)					# If exists, add value to respective key in newDict. Else, move to (4).
 
-	if bool(matched):										#4. Check if newDict has keys:values.
-			top_3 = bestMatched(matched,userdict,maindict)	# If it has values, return bestMatched()
+	print acceptedcountry
+	print likesdislikes
+	print books
+	print userdict
+	print maindict
+
+	combine_matches = {}
+	for i in country:
+		if i in likesdislikes:
+			combine_matches[i] = likesdislikes.get(i)
+		if i in books:
+			combine_matches[i] = books.get(i)
+	print(combine_matches)
+
+	if bool(combine_matches):													#4. Check if newDict has keys:values.
+			top_3 = pointsRanking(combine_matches,userdict,maindict,country,likesdislikes,books)	# If it has values, return bestMatched()
 			return top_3
-	else:													# Else, return empty dictionary
+	else:																# Else, return empty dictionary
 		print("There are no matches available for you at the moment. Please try again later.")
-		return {}
+		return []
 
 
-def bestMatched(matched_dict,userdict,maindict):
-	best_matched_names = []
-	best_matched_points = []
-	for name,points in sorted(matched_dict.iteritems(), key=lambda (k,v): (v,k), reverse=True):	# Sort dict by values in desc order with Lambda
-		best_matched_names.append(name)
-		best_matched_points.append(points)
+def pointsRanking(matched_dict,userdict,maindict,country,likesdislikes,books):
+	points_ranked_names = []
+	points_ranked_values = []
+	for name, points in sorted(matched_dict.iteritems(), key=lambda (k,v): (v,k), reverse=True):	# Sort dict by values in desc order with Lambda
+		points_ranked_names.append(name)
+		points_ranked_values.append(points)
 
 	#Scenario: Top 5 matches might have the same points/values.
+	#Objective: For those with same points, sort by priority order (if user exists in both likesdislikes and books dictionary).
+#priority_sort = priorityRanking(points_ranked_names,points_ranked_values,country,likesdislikes,books)
 	#Objective: For those with same points, sort by abs() between user's age and maindict's avg age range.
-	sorted_match = sortMatches(best_matched_names,best_matched_points,userdict,maindict)
+	sorted_match = sortRanking(points_ranked_names,points_ranked_values,userdict,maindict,country,likesdislikes,books)
 
 	return sorted_match[:3]
 
 
-def sortMatches(namelist,pointslist,userdict,maindict):
+def priorityRanking(namelist,likesdislikes,books,userdict,maindict):
+	priority_list = []
+	for i in namelist:  # For user in namelist:
+		if i in likesdislikes and i in books:  # 2. Check if users in acceptedcountry exists in acceptedlikesdislikes and acceptedbooks.
+			priority_list.append(i)
+
+	print("namelist:",namelist)
+	print("likesdislikes:",likesdislikes)
+	print("books:",books)
+
+	if len(priority_list) > 1:
+		priority = ageChecker(priority_list, userdict, maindict)
+		return priority
+	elif len(priority_list) == 1:
+		return priority_list
+	else:
+		return namelist
+
+
+def sortRanking(namelist,pointslist,userdict,maindict,country,likesdislikes,books):
 	"""
 	1. Given namelist & pointslist.
 	2. Check if pointslist[0] == pointslist[i].
@@ -98,40 +126,79 @@ def sortMatches(namelist,pointslist,userdict,maindict):
 	sliced_list3 = namelist[x+y:x+y+z]	# Group values of unique third index.
 
 	if len(sliced_list1) > 1:									# If there is more than 1 count of first index,
-		names1 = ageChecker(sliced_list1,userdict,maindict)		# Call ageChecker() and sort names by abs() between user's age and maindict's avg age range.
-		if len(names1) <= 3 and len(sliced_list2) == 1:			# If first index count is not more than 3 and second index count has only 1,
-			for i in sliced_list2:
-				names1.append(i)								# Append names of of second index count to names of first index count.
-		elif len(names1) <= 3 and len(sliced_list2) > 1:		# Elif first index count is not more than 3 and second index count is more than 1,
-			names2 = ageChecker(sliced_list2,userdict,maindict)	# Call ageChecker() and sort names by abs() between user's age and maindict's avg age range.
-			for i in names2:
-				names1.append(i)								# Append names of of second index count to names of first index count.
-			#DONE
-	
-	elif len(sliced_list2) > 1:									# Elif there is more than 1 count of second index,
-		names1 = ageChecker(sliced_list1,userdict,maindict)		# Call ageChecker() and sort names by abs() between user's age and
-		names2 = ageChecker(sliced_list2,userdict,maindict)		#  maindict's avg age range individually for first and second index.
-		for i in names2:
-			names1.append(i)									# Append names of of second index count to names of first index count.
+		rank_priority = priorityRanking(sliced_list1,likesdislikes,books,userdict,maindict)
+		print("Priority SLiced 1: ", rank_priority)
+		print("Sliced List:",sliced_list1)
+		if sliced_list1 != rank_priority:
+			for name in rank_priority:
+				print(rank_priority)
+				print(name)
+				sliced_list1.remove(name)
+		print("Sliced List:",sliced_list1)
+		if len(rank_priority) > 1 and len(rank_priority) <= 3 and len(sliced_list1) == 1:
+			priority1 = ageChecker(rank_priority,userdict,maindict)
+			priority1.append(sliced_list1)
+		elif len(rank_priority) > 1 and len(rank_priority) <= 3 and len(sliced_list1) > 1:
+			priority1 = ageChecker(rank_priority, userdict, maindict)
+			names1 = ageChecker(sliced_list1, userdict, maindict)
+			for i in names1:
+				priority1.append(i)
+		elif len(rank_priority) <= 1 and len(sliced_list1) > 1:
+			priority1 = []
+			priority1.append(rank_priority)
+			names1 = ageChecker(sliced_list1, userdict, maindict)
+			for i in names1:
+				priority1.append(i)
+		else:
+			names1 = ageChecker(sliced_list1, userdict, maindict)
+			return names1
+		return priority1
 		#DONE
 
-	elif len(sliced_list3) > 1:									# Elif there is more than 1 count of third index,
-		names1 = ageChecker(sliced_list1,userdict,maindict)		# Call ageChecker() and sort names by abs() between user's age
-		names2 = ageChecker(sliced_list2,userdict,maindict)		#  and maindict's avg age range individually for first, second
-		names3 = ageChecker(sliced_list3,userdict,maindict)		#  and third index.
+		"""if len(names1) <= 3 and len(sliced_list1) == 1:
+			names1 = ageChecker(sliced_list1,userdict,maindict)		# Call ageChecker() and sort names by abs() between user's age and maindict's avg age range.
+			if len(names1) <= 3 and len(sliced_list2) == 1:			# If first index count is not more than 3 and second index count has only 1,
+				for i in sliced_list2:
+					names1.append(i)								# Append names of of second index count to names of first index count.
+			elif len(names1) <= 3 and len(sliced_list2) > 1:		# Elif first index count is not more than 3 and second index count is more than 1,
+				names2 = ageChecker(sliced_list2,userdict,maindict)	# Call ageChecker() and sort names by abs() between user's age and maindict's avg age range.
+				for i in names2:
+					names1.append(i)								# Append names of of second index count to names of first index count.
+				#DONE"""
+	
+	elif len(sliced_list2) > 1:									# Elif there is more than 1 count of second index AND there is only 1 count of first index,
+		rank_priority = priorityRanking(sliced_list2,likesdislikes,books,userdict,maindict)
+		for name in rank_priority:
+			sliced_list2.remove(name)
+#names1 = ageChecker(sliced_list1,userdict,maindict)		# Call ageChecker() and sort names by abs() between user's age and
+		names2 = ageChecker(sliced_list2,userdict,maindict)		#  maindict's avg age range individually for first and second index.
+		for i in rank_priority:
+			sliced_list1.append(i)
 		for i in names2:
-			names1.append(i)									# Append names of of second index count to names of first index count.
+			sliced_list1.append(i)									# Append names of of second index count to names of first index count.
+		return sliced_list1
+		#DONE
+
+	elif len(sliced_list3) > 1:									# Elif there is more than 1 count of third index AND there is only 1 count of first & second index,
+		rank_priority = priorityRanking(sliced_list3,likesdislikes,books,userdict,maindict)
+		for name in rank_priority:
+			sliced_list3.remove(name)
+#names1 = ageChecker(sliced_list1,userdict,maindict)		# Call ageChecker() and sort names by abs() between user's age
+#names2 = ageChecker(sliced_list2,userdict,maindict)		#  and maindict's avg age range individually for first, second
+		names3 = ageChecker(sliced_list3,userdict,maindict)		#  and third index.
+		for i in rank_priority:
+			sliced_list1.append(i)
+		sliced_list1.append(sliced_list2)
 		for i in names3:
-			names1.append(i)									# Append names of of third index count to names of first index count.
+			sliced_list1.append(i)									# Append names of third index count to names of first index count.
+		return sliced_list1
 		#DONE
 
 	else:														# If no requirements are fulfilled, means that all points values
 		return sliced_list1+sliced_list2+sliced_list3			#  are unique. Thus, return only 3 values.
-
-	return names1												# Return appended list of first index count.
 	
 
-def ageChecker(namelist,userdict,maindict):
+def ageChecker(namelist,userdict,maindict):		# Tie breaker to sort users if points are the same.
 	abs_age_dict = {}
 	abs_age_list = []
 	acceptedAge = userdict["Acceptable_age_range"]	# Retrieve the accepted_age_range from user.
