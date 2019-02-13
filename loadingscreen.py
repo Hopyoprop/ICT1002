@@ -8,13 +8,14 @@ from globalvars import *
 import globalvars as gv
 from function2 import *
 from function3 import *
-from trycode import *
-#import trycode as tc
 from function4 import *
 from function5 import *
 import operator
+import copy
 import Queue
 import threading as threading
+
+
 LABEL_FONT = ("Forte", 13)
 TEXT_FONT = ("Forte", 13)
 
@@ -69,7 +70,6 @@ class LoadingScreen():
 
         progresstext = Label(main, text="0% done...", font=TEXT_FONT, background='lightblue', fg='darkgreen')
         progresstext.pack(anchor='center')
-
 
 
 
@@ -132,21 +132,23 @@ class LoadingScreen():
         # init list that will contain top 3 profiles based on likes and dislikes
         listoftop3_accepted_profiles_based_on_likesdislikes = []
 
+        copyof_dict_accepted_profiles_based_on_likesdislikes = {}
         # make a copy of the dictionary made by function 3 (shortlisted profiles based on likes and dislikes)
-        copyof_dict_accepted_profiles_based_on_likesdislikes = dict_accepted_profiles_based_on_likesdislikes
+        copyof_dict_accepted_profiles_based_on_likesdislikes = copy.deepcopy(dict_accepted_profiles_based_on_likesdislikes)
+
 
         # repeat 3 times to get top 3 matches based on likes & dislikes
         for i in range(0, 3):
             # if dictionary not empty and if highest value is > 0 (meaning point is more than 0)
-            if len(copyof_dict_accepted_profiles_based_on_likesdislikes) != 0 and max(dict_accepted_profiles_based_on_likesdislikes.iteritems(), key=operator.itemgetter(1))[1] > 0:
+            if len(copyof_dict_accepted_profiles_based_on_likesdislikes) != 0 and max(copyof_dict_accepted_profiles_based_on_likesdislikes.iteritems(), key=operator.itemgetter(1))[1] > 0:
                 # get key (profile) with highest score, if theres a tie, only one of the profiles is returned
-                profile_with_highest_score = max(dict_accepted_profiles_based_on_likesdislikes.iteritems(), key=operator.itemgetter(1))[0]
+                profile_with_highest_score = max(copyof_dict_accepted_profiles_based_on_likesdislikes.iteritems(), key=operator.itemgetter(1))[0]
 
                 # append this profile into listoftop3_accepted_profiles_based_on_likesdislikes
                 listoftop3_accepted_profiles_based_on_likesdislikes.append(str(profile_with_highest_score))
 
                 # delete profile with highest score from the dictionary
-                del copyof_dict_accepted_profiles_based_on_likesdislikes[profile_with_highest_score]
+                del copyof_dict_accepted_profiles_based_on_likesdislikes[str(profile_with_highest_score)]
 
         # delete the copy of the dicitonary (dont waste space)
         del copyof_dict_accepted_profiles_based_on_likesdislikes
@@ -167,39 +169,41 @@ class LoadingScreen():
 
 
 
-        '''dict_accepted_profiles_based_on_books = processBook(userdict, maindict)
+        dict_accepted_profiles_based_on_books = processBook(userdict, maindict)
         # init list that will contain top 3 profiles based on books
         listoftop3_accepted_profiles_based_on_books = []
 
         # make a copy of the dictionary made by function 3 (shortlisted profiles based on likes and dislikes)
-        copyof_dict_accepted_profiles_based_on_books = dict_accepted_profiles_based_on_books
-
+        copyof_dict_accepted_profiles_based_on_books = copy.deepcopy(dict_accepted_profiles_based_on_books)
+        print "original copydict"+str(copyof_dict_accepted_profiles_based_on_books)
         # repeat 3 times to get top 3 matches based on likes & dislikes
         for i in range(0, 3):
             # if dictionary not empty and if highest value is > 0 (meaning point is more than 0)
             if len(copyof_dict_accepted_profiles_based_on_books) != 0 and \
-                    max(dict_accepted_profiles_based_on_books.iteritems(), key=operator.itemgetter(1))[1] > 0:
+                    max(copyof_dict_accepted_profiles_based_on_books.iteritems(), key=operator.itemgetter(1))[1] > 0:
+                print copyof_dict_accepted_profiles_based_on_books
                 # get key (profile) with highest score, if theres a tie, only one of the profiles is returned
                 profile_with_highest_score = \
-                max(dict_accepted_profiles_based_on_books.iteritems(), key=operator.itemgetter(1))[0]
+                max(copyof_dict_accepted_profiles_based_on_books.iteritems(), key=operator.itemgetter(1))[0]
 
                 # append this profile into listoftop3_accepted_profiles_based_on_likesdislikes
                 listoftop3_accepted_profiles_based_on_books.append(str(profile_with_highest_score))
-
+                print "to delete: "+str(profile_with_highest_score)
                 # delete profile with highest score from the dictionary
                 del copyof_dict_accepted_profiles_based_on_books[profile_with_highest_score]
+                print "after copydict: "+str(copyof_dict_accepted_profiles_based_on_books)
 
         # delete the copy of the dicitonary (dont waste space)
         del copyof_dict_accepted_profiles_based_on_books
 
         # add this list to lists_from_each_functions
-        lists_from_each_functions.append(listoftop3_accepted_profiles_based_on_books)'''
+        lists_from_each_functions.append(listoftop3_accepted_profiles_based_on_books)
 
         ################################################################################################################
         ######################### DELETE THIS HARDCODED FUNCTION 4 DICTIONARY AND LIST (FOR TEST USE ONLY) #############
-        dict_accepted_profiles_based_on_books = {'Jenny Wang': 20, 'Rose': 10, 'Kevin': 20, 'Teresa': 20, 'Joel Jackson': 40, 'Carol':20, 'Shelley':20, 'Lisa Marie':0}
-        listoftop3_accepted_profiles_based_on_books = ['Joel Jackson', 'Carol', 'Shelley']
-        lists_from_each_functions.append(listoftop3_accepted_profiles_based_on_books)
+        #dict_accepted_profiles_based_on_books = {'Jenny Wang': 20, 'Rose': 10, 'Kevin': 20, 'Teresa': 20, 'Joel Jackson': 40, 'Carol':20, 'Shelley':20, 'Lisa Marie':0}
+        #listoftop3_accepted_profiles_based_on_books = ['Joel Jackson', 'Carol', 'Shelley']
+        #lists_from_each_functions.append(listoftop3_accepted_profiles_based_on_books)
         print "lists_from_each_functions: " + str(lists_from_each_functions)
 
         ################################################################################################################
@@ -227,13 +231,8 @@ class LoadingScreen():
         ##################################################################################################################
 
         # update global variables with list of shortlisted Usernames
-        # main.quit()
-        # main.destroy()
         # ^ once function 5 is done executing and global vars are updated
-        #
-
-
-        # close this loading screen, and update global variables with lists of Usernames that were shortlisted*******************************************************************************************************************
+        # (list of shortlisted Usernames from each function)
         gv.setlist_of_shortlisted_users(lists_from_each_functions)
 
         main.lift()

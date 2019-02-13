@@ -21,7 +21,7 @@ class ResultsPage():
         main.geometry(dimensions)
         main.title(titleofwindow)
         main.configure(background='lightblue')
-        #main.protocol("WM_DELETE_WINDOW", lambda: destroywindow())
+        main.protocol("WM_DELETE_WINDOW", lambda: destroywindow())
 
         # list to store input x and y dimensions of window
         xANDy = dimensions.split("x")
