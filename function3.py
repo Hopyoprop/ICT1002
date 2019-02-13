@@ -31,23 +31,23 @@ def processInterest(userdict, maindict):
         # Run through check for User Likes
         for L1 in userlikes:
             for L2 in profilelikes:
-                if L2.lstrip(' ') in L1.lstrip(' '):
+                if (L2.lstrip(' ')).lower() in (L1.lstrip(' ')).lower():
                     currentuserpoints += 20
 
         # Run through check for User Dislikes
         for D1 in userdislikes:
             for D2 in profiledislikes:
-                if D2.lstrip(' ') in D1.lstrip(' '):
+                if (D2.lstrip(' ')).lower() in (D1.lstrip(' ')).lower():
                     currentuserpoints += 40
 
         # Run through check for Conflicting Likes and Dislikes
         for L1 in userlikes:
             for D2 in profiledislikes:
-                if D2.lstrip(' ') in L1.lstrip(' '):
+                if (D2.lstrip(' ')).lower() in (L1.lstrip(' ')).lower():
                     currentuserpoints -= 20
         for D1 in userdislikes:
             for L2 in profilelikes:
-                if L2.lstrip(' ') in D1.lstrip(' '):
+                if (L2.lstrip(' ')).lower() in (D1.lstrip(' ')).lower():
                     currentuserpoints -= 20
         profilepoints[str("".join(profiledict[i]['Name']))] = currentuserpoints
     return profilepoints
