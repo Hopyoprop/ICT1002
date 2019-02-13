@@ -59,7 +59,7 @@ class ResultsPage():
             exportdata(list_of_users_to_generateCSV)
 
         # definition to make label on main reflect how many matches were found
-        def foundmatchescount_labelupdate(self, number):
+        def foundmatchescount_labelupdate(number):
             self.foundmatchescountlabel.config(text="%s Matches Found!" % str(number))
 
 
@@ -134,16 +134,16 @@ class ResultsPage():
             self.maincanvas.itemconfig(canvasframe, width=canvas_width)
 
         # keeps track of the mouse scrolling action
-        def mouse_scroll(event, canvas):
+        def mouse_scroll(event, maincanvas):
             if event.delta:
-                canvas.yview_scroll(-1 * (event.delta / 120), 'units')
+                maincanvas.yview_scroll(-1 * (event.delta / 120), 'units')
             else:
                 if event.num == 5:
                     move = 1
                 else:
                     move = -1
 
-                canvas.yview_scroll(move, 'units')
+                maincanvas.yview_scroll(move, 'units')
         ################################################################################################################
         # bind event of filterbox changing to call function
 
@@ -155,17 +155,16 @@ class ResultsPage():
         ################################################################################################################
         ################################################################################################################
 
-        # INITIALIZE DEFAULT WINDOW (displays function 2 results)
 
         # get the list of users to display
         list_of_users_to_display = gv.getshortlisteduserslist()
 
+        # INITIALIZE AND DISPLAY DEFAULT WINDOW (displays function 2 results)
         function1frame = tk.Frame(self.maincanvas, borderwidth=0, background="lightblue")
         self.create_labelframes_in_frame(list_of_users_to_display[0], function1frame, self.foundmatchescountlabel)
         f1window = self.maincanvas.create_window((0, 0), window=function1frame, anchor="nw")
         self.maincanvas.bind('<Configure>', lambda event, canvasframe=f1window: width(event, canvasframe))
         self.maincanvas.update()
-
 
 
         ################################################################################################################
