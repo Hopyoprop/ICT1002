@@ -7,56 +7,41 @@ Jun Ming
 Xiu Qi
 Yeo Han, Jordan
 '''
-"""
-1. Takes in age_range() + func2 + func3 + func4
-			= age_range + acceptedcountry + acceptedlikesdislikes + acceptedbooks
-			= <list:names> + <list:names> + <dict:names+points> + <dict:names+points>
-
-2. Check if users in acceptedcountry exists in acceptedlikesdislikes.
-	2a. If exists, append key:value to newDict.
-	2b. Else, move to (4).
-
-3. Check if users in (2) exists in acceptedbooks.
-	3a. If exists, add value to respective key in newDict.
-	3b. Else, move to (4).
-
-4. Check if newDict has keys:values.
-	4a. If it has values, move to (5).
-	4b. Else, print("There are no matches available for you at the moment.\nPlease try again later.")
-
-5. Sort newDict by values and return the top 3 usernames with the highest points values.
-	5a. If same values, take the username nearest to age.
-"""
-def processAgeRange(userdict, maindict):
-	# Check if userdict_acceptableAge is in maindict_age <for range>
-	# If yes, store name into list
-	# Return list
-	return True
-
-
 def processMatches(acceptedcountry, likesdislikes, books, userdict, maindict):
+	
+	acceptedcountry = ['Teresa', 'Carol', 'Rose', 'Shelley', 'Jenny Wang', 'Angela Little', 'Lisa Marie']
+	likesdislikes = {'Angela Little': -80, 'Rose': 0, 'Jenny Wang': 140, 'Teresa': 140, 'Lisa Marie': 140, 'Carol': 180, 'Shelley': 0}
+	books = {'Shelley': 20, 'Joel Jackson': 40, 'Lisa Marie': 0, 'Rose': 10, 'Carol': 20, 'Jenny Wang': 20, 'Teresa': 20, 'Kevin': 20}
+	userdict = {'Name': ['Alpha Romero'], 'Gender': ['Male'], 'Age': ['27'], 'Dislikes': ['football', 'hunting', 'swimming'], 'Acceptable_age_range': ['18', '32'], 'Acceptable_country': ['UK', 'Singapore', 'China', 'USA'], 'Books': ['Human Philosohy', 'Nicomachean Ethics', 'Summa Theologiae', 'Meditations on First Philosophy', 'Essay Concerning Human Understanding', 'Principles of Human Knowledge', 'Enquiry Concerning Human Understanding', 'Social Contract', 'Phenomenology of Spirit'], 'Likes': ['hotpot', 'chicken and chops', 'chilli', 'roses', 'movies'], 'Country': ['Singapore']}
+	maindict = {0: {'Name': ['Teresa'], 'Gender': ['F'], 'Age': ['22'], 'Dislikes': ['garlic', 'durian', 'swimming'], 'Acceptable_age_range': ['18', '30'], 'Acceptable_country': ['Singapore', 'China'], 'Books': ['Total Truth: Liberating Christianity from its Cultural Captivity', 'Reflections on the Psalms', 'Intercessory Prayer: How God Can Use Your Prayers to Move Heaven Earth', "God 's Favor - Breath Of Heaven", 'Letters to Malcolm: Chiefly on Prayer'], 'Likes': ['hotpot', 'chilli', 'chicken and chops', 'roses', 'movies'], 'Country': ['Singapore']}, 1: {'Name': ['Michael Jackson'], 'Gender': ['Male'], 'Age': ['29'], 'Dislikes': ['durian', 'garlic', 'swimming'], 'Acceptable_age_range': ['18', '29'], 'Acceptable_country': ['Singapore', 'China'], 'Books': ['Mere Christianity', 'Knowing God', 'The problem of Pain', 'The God who is there', 'The reason for God: belief in an age of skepticism', 'Experiencing God: knowing and doing the will of God', 'work book'], 'Likes': ['hotpot', 'chicken and chops', 'chilli', 'roses', 'movies'], 'Country': ['Singapore']}, 2: {'Name': ['Carol'], 'Gender': ['F'], 'Age': ['23'], 'Dislikes': ['football', 'hunting', 'swimming'], 'Acceptable_age_range': ['23', '50'], 'Acceptable_country': ['Singapore', 'China'], 'Books': ['Christian reflections', 'The red tent', 'The God who is there', 'God in the Dock: Essays on Theology and Ethics', 'Total truth: liberating christianity from its cultural captivity', 'Redeeming love', ''], 'Likes': ['Chicken rice', 'hotpot', 'Carrot cake', 'chilli crab', 'roses', 'movies'], 'Country': ['USA']}, 3: {'Name': ['Kevin'], 'Gender': ['Male'], 'Age': ['25'], 'Dislikes': ['curry', 'garlic', 'basketball'], 'Acceptable_age_range': ['10', '33'], 'Acceptable_country': ['Singapore'], 'Books': ['Human Philosohy', 'Adventures in Human Being', 'Meditations on the Philosophy', 'Essay Concerning Human topic', 'Principles of Human being'], 'Likes': ['fish', 'chicken', 'chocolate', 'roses', 'durian', 'movies'], 'Country': ['Singapore']}, 4: {'Name': ['Rose'], 'Gender': ['F'], 'Age': ['25'], 'Dislikes': ['chilli', 'garlic', 'basketball'], 'Acceptable_age_range': ['18', '35'], 'Acceptable_country': ['Singapore', 'China', 'UK'], 'Books': ['Human Philosohy book', 'Adventures in Human Being', 'Towards the Philosophy', 'Essay Related Human Topics', 'Human Being Shall Know Philosohy'], 'Likes': ['fish', 'honey', 'chocolate', 'roses', 'durian', 'running'], 'Country': ['Singapore']}, 5: {'Name': ['Shelley'], 'Gender': ['Female'], 'Age': ['24'], 'Dislikes': ['chilli', 'garlic', 'basketball'], 'Acceptable_age_range': ['18', '35'], 'Acceptable_country': ['Singapore', 'China', 'USA'], 'Books': ['Human Philosohy book', 'Adventures in Human Being', 'Towards the Philosophy', 'Essay Related Human Topics', 'Human Being Shall Know Philosohy'], 'Likes': ['fish', 'honey', 'chocolate', 'roses', 'durian', 'running'], 'Country': ['China']}, 6: {'Name': ['Joel Jackson'], 'Gender': ['Male'], 'Age': ['29'], 'Dislikes': ['durian', 'garlic', 'swimming'], 'Acceptable_age_range': ['18', '33'], 'Acceptable_country': ['Singapore', 'China', 'USA'], 'Books': ['Human Philosohy', 'Nicomachean Ethics', 'Summa Theologiae', 'Meditations on First Philosophy', 'Essay Concerning Human Understanding', 'Principles of Human Knowledge', 'Enquiry Concerning Human Understanding', 'Social Contract', 'Phenomenology of Spirit'], 'Likes': ['hotpot', 'chicken and chops', 'chilli', 'roses', 'movies'], 'Country': ['Singapore']}, 7: {'Name': ['Jenny Wang'], 'Gender': ['F'], 'Age': ['25'], 'Dislikes': ['durian', 'garlic', 'swimming'], 'Acceptable_age_range': ['23', '60'], 'Acceptable_country': ['China', 'USA', 'Singapore'], 'Books': ['Mere Christianity', 'Knowing God', 'How should we then live? the rise and decline of western thought and culture', 'The problem of Pain', 'The God who is there', 'The reason for God: belief in an age of skepticism', 'Experiencing God: knowing and doing the will of God', 'work book', ''], 'Likes': ['hotpot', 'chicken and chops', 'chilli', 'roses', 'movies'], 'Country': ['China']}, 8: {'Name': ['Angela Little'], 'Gender': ['F'], 'Age': ['22'], 'Dislikes': ['hotpot', 'chilli', 'roses', 'movies'], 'Acceptable_age_range': ['18', '30'], 'Acceptable_country': ['Singapore', 'China'], 'Books': ['Christian reflections', 'The red tent', 'The God who is there', 'God in the Dock: Essays on Theology and Ethics', 'Total truth: liberating christianity from its cultural captivity', 'Redeeming love'], 'Likes': ['garlic', 'durian', 'swimming', 'chicken and chops'], 'Country': ['Singapore']}, 9: {'Name': ['Lisa Marie'], 'Gender': ['F'], 'Age': ['22'], 'Dislikes': ['garlic', 'durian', 'swimming'], 'Acceptable_age_range': ['18', '30'], 'Acceptable_country': ['Singapore', 'China'], 'Books': ['Desiring God Meditations of a Christian Hedonist', 'God Knowing', 'God Favor: Breath of Heaven', 'The God is there', 'The reason for God: in an age of skepticism', 'Experiencing God: knowing the will of God', 'work book'], 'Likes': ['hotpot', 'chilli', 'chicken and chops', 'roses', 'movies'], 'Country': ['Singapore']}}
+
 	country = []
-	for c in acceptedcountry:								# Formatting for acceptedcountry list.
+	for c in acceptedcountry:							# Formatting for acceptedcountry list.
 		country.append("".join(c))
 
-	print acceptedcountry
-	print likesdislikes
-	print books
-	print userdict
-	print maindict
+	print("Accepted Countries: ",acceptedcountry)
+	print("Accepted Countries: ",country)
+	print("likesdislikes: ",likesdislikes)
+	print("books: ",books)
+	#print(userdict)
+	#print(maindict)
 
 	combine_matches = {}
-	for i in country:
-		if i in likesdislikes:
-			combine_matches[i] = likesdislikes.get(i)
-		if i in books:
-			combine_matches[i] = books.get(i)
-	print(combine_matches)
+	for i in country:									#For each user in acceptablecountry list,
+		if i in likesdislikes:							# If user exists in likesdislikes dictionary,
+			combine_matches[i] = likesdislikes.get(i)	#  Add user and points to ccombine_matches dict.
+		if i in books:									# Or user exists in books dictionary,
+			combine_matches[i] = books.get(i)			#  Add user and points to ccombine_matches dict.
+	print("Combined Likes: ",combine_matches)
+	#print(country)
+	#print(likesdislikes)
+	#print(books)
 
-	if bool(combine_matches):													#4. Check if newDict has keys:values.
-			top_3 = pointsRanking(combine_matches,userdict,maindict,country,likesdislikes,books)	# If it has values, return bestMatched()
+	if bool(combine_matches):																		#Check if combine_matches dict has keys:values.
+			top_3 = pointsRanking(combine_matches,userdict,maindict,country,likesdislikes,books)	# If it has values, perform best_matching algo.
+			print(top_3)
 			return top_3
-	else:																# Else, return empty dictionary
+	else:																							# Else, return empty dictionary.
 		print("There are no matches available for you at the moment. Please try again later.")
 		return []
 
@@ -68,32 +53,17 @@ def pointsRanking(matched_dict,userdict,maindict,country,likesdislikes,books):
 		points_ranked_names.append(name)
 		points_ranked_values.append(points)
 
+	# 7 users only
+	points_ranked_values = [0,0,0,0,0,0,-200]
+
 	#Scenario: Top 5 matches might have the same points/values.
-	#Objective: For those with same points, sort by priority order (if user exists in both likesdislikes and books dictionary).
-#priority_sort = priorityRanking(points_ranked_names,points_ranked_values,country,likesdislikes,books)
-	#Objective: For those with same points, sort by abs() between user's age and maindict's avg age range.
+	#Objective 1: For those with same points, sort by priority order (if user exists in both likesdislikes and books dictionary).
+	#Objective 2: After priority order, sort by abs() difference between current user's acceptable_age_range and maindict's age.
+	print(points_ranked_names)
+	print(points_ranked_values)
 	sorted_match = sortRanking(points_ranked_names,points_ranked_values,userdict,maindict,country,likesdislikes,books)
 
 	return sorted_match[:3]
-
-
-def priorityRanking(namelist,likesdislikes,books,userdict,maindict):
-	priority_list = []
-	for i in namelist:  # For user in namelist:
-		if i in likesdislikes and i in books:  # 2. Check if users in acceptedcountry exists in acceptedlikesdislikes and acceptedbooks.
-			priority_list.append(i)
-
-	print("namelist:",namelist)
-	print("likesdislikes:",likesdislikes)
-	print("books:",books)
-
-	if len(priority_list) > 1:
-		priority = ageChecker(priority_list, userdict, maindict)
-		return priority
-	elif len(priority_list) == 1:
-		return priority_list
-	else:
-		return namelist
 
 
 def sortRanking(namelist,pointslist,userdict,maindict,country,likesdislikes,books):
@@ -109,11 +79,12 @@ def sortRanking(namelist,pointslist,userdict,maindict,country,likesdislikes,book
 	x = 0		# Set index to 0
 	y = 1		# Set index to 1
 	z = 1		# Set index to 1
-	count = 0																	# Iterate pointslist and check if first index
-	while count < len(pointslist):												#  is same as second index, then third index, etc. 
-		if x < len(pointslist) and pointslist[0] == pointslist[x]:
+	count = 0
+	# Given namelist & pointslist,
+	while count < len(pointslist):												#Iterate pointslist and check if first index
+		if x < len(pointslist) and pointslist[0] == pointslist[x]:				# is same as second index, then third index, etc. 
 			x += 1
-		elif x+y < len(pointslist) and pointslist[x] == pointslist[x+y]:
+		elif x+y < len(pointslist) and pointslist[x] == pointslist[x+y]:		#
 			y += 1
 		elif x+y+z < len(pointslist) and pointslist[x+y] == pointslist[x+y+z]:
 			z += 1
@@ -121,101 +92,91 @@ def sortRanking(namelist,pointslist,userdict,maindict,country,likesdislikes,book
 			break
 		count += 1
 		
-	sliced_list1 = namelist[0:x]		# Group values of unique first index.
-	sliced_list2 = namelist[x:x+y]		# Group values of unique second index.
-	sliced_list3 = namelist[x+y:x+y+z]	# Group values of unique third index.
+	sliced_list1 = namelist[0:x]		# Group first unique set of values.
+	sliced_list2 = namelist[x:x+y]		# Group second unique set of values.
+	sliced_list3 = namelist[x+y:x+y+z]	# Group third unique set of values.
 
-	if len(sliced_list1) > 1:									# If there is more than 1 count of first index,
+	"""
+	Test Cases: To return top 3 best matches, len(namelist) must amount to 3 or more.
+				priorityRanking() achieves this by sorting based on 2 conditions.
+	1. sliced1 >= 3										return
+	2. sliced1 == 2 and sliced2 == 1					return
+	3. sliced1 == 1 and sliced2 >=2						return
+	4. sliced1 == 1 and sliced2 == 1 and sliced3 >=1	return
+	5. else, the only case left is when sliced1 <= 0	return empty.
+	"""
+
+	#Test Case 1 -- if sliced_list1 >= 3, return.
+	if len(sliced_list1) >= 3:
 		rank_priority = priorityRanking(sliced_list1,likesdislikes,books,userdict,maindict)
-		print("Priority SLiced 1: ", rank_priority)
-		print("Sliced List:",sliced_list1)
-		if sliced_list1 != rank_priority:
-			for name in rank_priority:
-				print(rank_priority)
-				print(name)
-				sliced_list1.remove(name)
-		print("Sliced List:",sliced_list1)
-		if len(rank_priority) > 1 and len(rank_priority) <= 3 and len(sliced_list1) == 1:
-			priority1 = ageChecker(rank_priority,userdict,maindict)
-			priority1.append(sliced_list1)
-		elif len(rank_priority) > 1 and len(rank_priority) <= 3 and len(sliced_list1) > 1:
-			priority1 = ageChecker(rank_priority, userdict, maindict)
-			names1 = ageChecker(sliced_list1, userdict, maindict)
-			for i in names1:
-				priority1.append(i)
-		elif len(rank_priority) <= 1 and len(sliced_list1) > 1:
-			priority1 = []
-			priority1.append(rank_priority)
-			names1 = ageChecker(sliced_list1, userdict, maindict)
-			for i in names1:
-				priority1.append(i)
-		else:
-			names1 = ageChecker(sliced_list1, userdict, maindict)
-			return names1
-		return priority1
-		#DONE
+		return rank_priority
 
-		"""if len(names1) <= 3 and len(sliced_list1) == 1:
-			names1 = ageChecker(sliced_list1,userdict,maindict)		# Call ageChecker() and sort names by abs() between user's age and maindict's avg age range.
-			if len(names1) <= 3 and len(sliced_list2) == 1:			# If first index count is not more than 3 and second index count has only 1,
-				for i in sliced_list2:
-					names1.append(i)								# Append names of of second index count to names of first index count.
-			elif len(names1) <= 3 and len(sliced_list2) > 1:		# Elif first index count is not more than 3 and second index count is more than 1,
-				names2 = ageChecker(sliced_list2,userdict,maindict)	# Call ageChecker() and sort names by abs() between user's age and maindict's avg age range.
-				for i in names2:
-					names1.append(i)								# Append names of of second index count to names of first index count.
-				#DONE"""
-	
-	elif len(sliced_list2) > 1:									# Elif there is more than 1 count of second index AND there is only 1 count of first index,
+	#Test Case 2 -- if sliced_list1 == 2 and sliced_list2 == 1, return.
+	elif len(sliced_list1) == 2 and len(sliced_list2) == 1:
+		rank_priority = priorityRanking(sliced_list1,likesdislikes,books,userdict,maindict)
+		rank_priority += sliced_list2
+		return rank_priority
+
+	#Test Case 3 -- if sliced_list1 == 1 and sliced_list2 >=2, return.
+	elif len(sliced_list1) == 1 and len(sliced_list2) >= 2:
 		rank_priority = priorityRanking(sliced_list2,likesdislikes,books,userdict,maindict)
-		for name in rank_priority:
-			sliced_list2.remove(name)
-#names1 = ageChecker(sliced_list1,userdict,maindict)		# Call ageChecker() and sort names by abs() between user's age and
-		names2 = ageChecker(sliced_list2,userdict,maindict)		#  maindict's avg age range individually for first and second index.
-		for i in rank_priority:
-			sliced_list1.append(i)
-		for i in names2:
-			sliced_list1.append(i)									# Append names of of second index count to names of first index count.
+		for user in rank_priority:
+			sliced_list1.append(user)
 		return sliced_list1
-		#DONE
 
-	elif len(sliced_list3) > 1:									# Elif there is more than 1 count of third index AND there is only 1 count of first & second index,
+	#Test Case 4 -- if sliced_list1 == 1 and sliced_list2 == 1 and sliced_list3 >=1, return.
+	elif len(sliced_list1) == 1 and len(sliced_list2) == 1 and len(sliced_list3) > 1:
 		rank_priority = priorityRanking(sliced_list3,likesdislikes,books,userdict,maindict)
-		for name in rank_priority:
-			sliced_list3.remove(name)
-#names1 = ageChecker(sliced_list1,userdict,maindict)		# Call ageChecker() and sort names by abs() between user's age
-#names2 = ageChecker(sliced_list2,userdict,maindict)		#  and maindict's avg age range individually for first, second
-		names3 = ageChecker(sliced_list3,userdict,maindict)		#  and third index.
-		for i in rank_priority:
-			sliced_list1.append(i)
-		sliced_list1.append(sliced_list2)
-		for i in names3:
-			sliced_list1.append(i)									# Append names of third index count to names of first index count.
+		sliced_list1 += sliced_list2
+		for user in rank_priority:
+			sliced_list1.append(user)
 		return sliced_list1
-		#DONE
 
-	else:														# If no requirements are fulfilled, means that all points values
-		return sliced_list1+sliced_list2+sliced_list3			#  are unique. Thus, return only 3 values.
-	
+	#Test Case 5 -- else, the remaining case important to us is when all sliced_list are == 0, append all list and return.
+	else:
+		return sliced_list1+sliced_list2+sliced_list3
 
-def ageChecker(namelist,userdict,maindict):		# Tie breaker to sort users if points are the same.
+
+def priorityRanking(namelist,likesdislikes,books,userdict,maindict):
+	priority_list = []
+	for i in namelist:  						#For each user in namelist:
+		if i in likesdislikes and i in books:	# Check if user exists in acceptedlikesdislikes and acceptedbooks.
+			priority_list.append(i)				# If they do, append to priority_list.
+
+	#print("namelist:",namelist)
+	#print("likesdislikes:",likesdislikes)
+	#print("books:",books)
+
+	if len(priority_list) > 1:										#If there is more than 1 names in priority_list,
+		priority = ageChecker(priority_list, userdict, maindict)	# Call ageChecker() to perform another round of sorting,
+		return priority[:3]											# And return the sorted list of names.
+
+	elif len(priority_list) == 1:									#Elif there is only 1 name in priority_list,
+		return priority_list										# Return that name only.
+
+	else:															#Else, if there are 0 names in priority_list,
+		priority = ageChecker(namelist, userdict, maindict)			# Call ageChecker() on original namelist.
+		return priority
+
+
+def ageChecker(namelist,userdict,maindict):			# Tie breaker to sort users if points are the same.
 	abs_age_dict = {}
 	abs_age_list = []
-	acceptedAge = userdict["Acceptable_age_range"]	# Retrieve the accepted_age_range from user.
+	acceptedAge = userdict["Acceptable_age_range"]	# Retrieve user's accepted_age_range.
 	minAge = int(acceptedAge[0])					# Store minimum accepted age.
 	maxAge = int(acceptedAge[1])					# Store maximum accepted age.
-	
-	for i in namelist:												# For each name in namelist,
+	acceptable_range_avg = abs(maxAge+minAge) / 2	# Find out avg acceptable_age_range of user.
+
+	for user in namelist:											# For each name in namelist,
 		for index,main in maindict.iteritems():
-			if i in main["Name"]:									# Compare between matched name (namelist) and maindict name.
-				checkAge = int("".join(main["Age"]))				#  Find out maindict age.
-				acceptable_range_avg = abs(maxAge+minAge) / 2		#  Find out acceptable_age_range of user.
-				abs_age_apart = abs(checkAge-acceptable_range_avg)	#  Find out what is their absolute difference.
+			if user in main["Name"]:								# Compare between matched username (namelist) and maindict name.
+				checkAge = int("".join(main["Age"]))				#  Find out maindict's user age.
+				abs_age_apart = abs(checkAge-acceptable_range_avg)	#  Find out abs() between avg acceptable_age_range of user and maindict's user age.
 				abs_age_list.append(abs_age_apart)					#  Append to list.
 	
 	counter = 0
-	for i in namelist:							# For each name in namelist,
-		abs_age_dict[i] = abs_age_list[counter]	#  Append name:abs_difference to dictionary. This could be in unsorted order.
+	for user in namelist:							# For each name in namelist,
+		abs_age_dict[user] = abs_age_list[counter]	#  Append name:abs_difference to dictionary. This could result in an unsorted order.
 		counter += 1
 
 	sorted_name_list = []
@@ -227,10 +188,6 @@ def ageChecker(namelist,userdict,maindict):		# Tie breaker to sort users if poin
 	return sorted_name_list
 
 
-"""
 if __name__ == "__main__":
-	c = [['Jenny Wang'], ['Rose'], ['Shelley'],['Angela Little']]
-	l = {'Rose': 20, 'Jenny Wang': 35, 'Joel Jackson': 220, 'Shelley': 50, 'Angela Little': 30}
-	b = {'Angela Little': 40, 'Joel Jackson': 10, 'Rose': 0, 'Jenny Wang': 130, 'Teresa': 30, 'Lisa Marie': 50, 'Carol': 40, 'Shelley': 0, 'Kevin': 0, 'Michael Jackson': 130}
-	print(addMatches(c,l,b,u,m))
-	"""
+	process_Matches = processMatches("","","","","")
+	
