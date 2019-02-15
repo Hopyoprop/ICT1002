@@ -17,6 +17,8 @@ def processBook(userdict, maindict):
     profiledict = maindict
     userbooks = userdict['Books']
     profilepoints = {}
+    gender = userdict['Gender'][0][0].upper()
+    age = userdict['Acceptable_age_range']
     #print("~~~~~~~~~~ Start User's books")
     # #print("User's Books : ",type(userbooks),userbooks)
     y = len(userbooks)
@@ -62,6 +64,15 @@ def processBook(userdict, maindict):
         profilebooklist = [] # profile's book list
         y = len(profiledict[i]['Books'])
         p = 0
+
+        checkgender = maindict[i]['Gender'][0][0]  # Obtain the Initial of the Gender
+        print(checkgender)
+        checkage = int("".join(maindict[i]['Age']))
+
+        # Gender check and Age check for if current profile is correct gender and inside acceptable age of user.
+        if (checkgender == gender) or not(int(age[0]) <= int(checkage) <= int(age[1])):
+            continue
+        
         while y > p:
             #print(profiledict[i]['Books'][p])
             urlstring = "https://www.googleapis.com/books/v1/volumes?q=%22intitle:" + str(profilebooks[p])
