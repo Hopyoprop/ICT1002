@@ -11,7 +11,7 @@ def exportdata(list, number):  # get function 2 to 5 best matched
         c = conn.cursor()  # pinpoint records in a database.
         placeholder = '?'
         placeholders = ', '.join(placeholder for unused in list)  # place in ? when list has item
-        query = "SELECT Name,Gender,Country,Age,Likes,Dislikes,Books FROM profiles WHERE Name IN (%s)" % placeholders
+        query = "SELECT Name,Gender,Country,Acceptable_country,Age,Acceptable_age_range,Likes,Dislikes,Books FROM profiles WHERE Name IN (%s)" % placeholders
         c.execute(query, list)  # execute the sql to get best matched data
         outputfilename = 'bestmatch_{}.csv'.format(
             dt.datetime.now().strftime('%Y%m%d%H%M%S'))  # make a unique file everytime user export data
