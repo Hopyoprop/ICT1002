@@ -56,7 +56,7 @@ class ResultsPage():
             # (basically the users that we want to make CSV file with)
             list_of_users_to_generateCSV = gv.getshortlisteduserslist()
 
-            exportdata(list_of_users_to_generateCSV)
+            getFunctionList(list_of_users_to_generateCSV)
 
         # definition to make label on main reflect how many matches were found
         def foundmatchescount_labelupdate(number):
@@ -69,8 +69,8 @@ class ResultsPage():
         self.titlelabel = Label(main, text="Matches Found", bg='lightblue', font=TITLE_FONT)
         self.titlelabel.place(x=180,y=5)
 
-        self.sortbylabel = Label(main, text="Sort By: ", bg='lightblue', font=LABEL_FONT)
-        self.sortbylabel.place(x=5, y=55)
+        self.matchbylabel = Label(main, text="Match By: ", bg='lightblue', font=LABEL_FONT)
+        self.matchbylabel.place(x=5, y=55)
 
         self.logoutbutton = Button(main, text="<- Logout", font=LOGOUT_FONT, command=lambda: logout())
         self.logoutbutton.place(x=20, y=650)
@@ -99,7 +99,7 @@ class ResultsPage():
         self.combostyle.theme_use('combostyle')
 
         # defining the filters for users to select from
-        self.filteroptions = ["Function 1", "Function 2", "Function 3", "Function 4", "Function 5"]
+        self.filteroptions = ["All Profiles", "Countries", "Likes & Dislikes", "Book Interests", "Recommended Filters"]
 
         self.filtercombobox = ttk.Combobox(main, width=20, state="readonly", values=self.filteroptions)
         self.filtercombobox['values'] = self.filteroptions
@@ -161,7 +161,7 @@ class ResultsPage():
 
         # INITIALIZE AND DISPLAY DEFAULT WINDOW (displays function 2 results)
         function1frame = tk.Frame(self.maincanvas, borderwidth=0, background="lightblue")
-        self.create_labelframes_in_frame(list_of_users_to_display[0], function1frame, self.foundmatchescountlabel)
+        self.create_function1_labelframes(list_of_users_to_display[0], function1frame, self.foundmatchescountlabel)
         f1window = self.maincanvas.create_window((0, 0), window=function1frame, anchor="nw")
         self.maincanvas.bind('<Configure>', lambda event, canvasframe=f1window: width(event, canvasframe))
         self.maincanvas.update()
@@ -181,24 +181,24 @@ class ResultsPage():
             # get the list of users to display
             list_of_users_to_display = gv.getshortlisteduserslist()
 
-            if str(newfilter) == "Function 1":
+            if str(newfilter) == "All Profiles":
                 self.maincanvas.delete("all")
 
                 # if list_of_users_to_display[0] is not an empty list (has things to display), create the frame
                 if len(list_of_users_to_display[0]) > 0:
                     function1frame = tk.Frame(self.maincanvas, borderwidth=0, background="lightblue")
-                    self.create_labelframes_in_frame(list_of_users_to_display[0], function1frame, self.foundmatchescountlabel)
+                    self.create_function1_labelframes(list_of_users_to_display[0], function1frame, self.foundmatchescountlabel)
                     f1window = self.maincanvas.create_window((0, 0), window=function1frame, anchor="nw")
                     self.maincanvas.bind('<Configure>', lambda event, canvasframe=f1window: width(event, canvasframe))
                     self.maincanvas.update()
 
                 # else list is empty, call function that only updates label on main to reflect '0 matches'
                 else:
-                    print "list is empty: " + str(list_of_users_to_display[0])
+                    #print "list is empty: " + str(list_of_users_to_display[0])
                     foundmatchescount_labelupdate(0)
                     self.maincanvas.update()
 
-            elif str(newfilter) == "Function 2":
+            elif str(newfilter) == "Countries":
                 self.maincanvas.delete("all")
 
                 # if list_of_users_to_display[1] is not an empty list (has things to display), create the frame
@@ -211,11 +211,11 @@ class ResultsPage():
 
                 # else list is empty, call function that only updates label on main to reflect '0 matches'
                 else:
-                    print "list is empty: " + str(list_of_users_to_display[1])
+                    #print "list is empty: " + str(list_of_users_to_display[1])
                     foundmatchescount_labelupdate(0)
                     self.maincanvas.update()
 
-            elif str(newfilter) == "Function 3":
+            elif str(newfilter) == "Likes & Dislikes":
                 self.maincanvas.delete("all")
 
                 # if list_of_users_to_display[2] is not an empty list (has things to display), create the frame
@@ -228,11 +228,11 @@ class ResultsPage():
 
                 # else list is empty, call function that only updates label on main to reflect '0 matches'
                 else:
-                    print "list is empty: " + str(list_of_users_to_display[2])
+                    #print "list is empty: " + str(list_of_users_to_display[2])
                     foundmatchescount_labelupdate(0)
                     self.maincanvas.update()
 
-            elif str(newfilter) == "Function 4":
+            elif str(newfilter) == "Book Interests":
                 self.maincanvas.delete("all")
                 # if list_of_users_to_display[3] is not an empty list (has things to display), create the frame
                 if len(list_of_users_to_display[3]) > 0:
@@ -244,11 +244,11 @@ class ResultsPage():
 
                 # else list is empty, call function that only updates label on main to reflect '0 matches'
                 else:
-                    print "list is empty: " + str(list_of_users_to_display[3])
+                    #print "list is empty: " + str(list_of_users_to_display[3])
                     foundmatchescount_labelupdate(0)
                     self.maincanvas.update()
 
-            elif str(newfilter) == "Function 5":
+            elif str(newfilter) == "Recommended Filters":
                 self.maincanvas.delete("all")
 
                 # if list_of_users_to_display[4] is not an empty list (has things to display), create the frame
@@ -261,7 +261,7 @@ class ResultsPage():
 
                 # else list is empty, call function that only updates label on main to reflect '0 matches'
                 else:
-                    print "list is empty: " + str(list_of_users_to_display[4])
+                    #print "list is empty: " + str(list_of_users_to_display[4])
                     foundmatchescount_labelupdate(0)
                     self.maincanvas.update()
 
@@ -321,6 +321,63 @@ class ResultsPage():
                     entryboxlist[6].insert(0, str(maindictionary[primarykey]['Likes']).replace("['", "").replace("']", "").replace("'",""))
                     entryboxlist[7].insert(0, str(maindictionary[primarykey]['Dislikes']).replace("['", "").replace("']", "").replace("'",""))
                     entryboxlist[8].insert(0, str(maindictionary[primarykey]['Books']).replace("['", "").replace("']", "").replace("'",""))
+
+                    # break out of for loop
+                    break
+
+            # for each created label in corresponding entrybox, place them using grid at specific rows (index)
+            for index in range(0, len(labellist)):
+                labellist[index].grid(row=index, column=0, sticky="w")
+                entryboxlist[index].grid(row=index, column=1)
+
+            # pack the label frame (this is the record of one user)
+            labelframe.pack()
+
+
+
+    ################################################################################################################
+    ####################################### function to create function 1 frames ###################################
+    # definition to draw labelframes and sub-widgets on given canvas using given list of users
+    def create_function1_labelframes(self, userstodisplay, frame, foundmatchescountlabel):
+        # set the foundmatchescountlabel to the length of the current function's list (will be more than 0)
+        foundmatchescountlabel.config(text="%s Matches Found!" % str(len(userstodisplay)))
+
+        # canvas label and entry boxes creation
+        for i in userstodisplay:
+            # for each user match, create a LabelFrame
+            labelframe = LabelFrame(frame, bd=5, bg='lightblue', width=540, pady=3)
+
+            # initalize temp lists
+            labellist = []
+            entryboxlist = []
+            maindictionary = gv.getmaindictionary()
+
+            # append field name labels into 'labellist' temp list
+            labellist.append(Label(labelframe, text="Name:                               ", font=LABEL_FONT, bg="lightblue", pady=2))
+            labellist.append(Label(labelframe, text="Gender:", font=LABEL_FONT, bg="lightblue", pady=2))
+            labellist.append(Label(labelframe, text="Age:", font=LABEL_FONT, bg="lightblue", pady=2))
+
+
+            # append entry boxes and store into 'entryboxlist' temp list
+            for index in range(0, 3):
+                entryboxlist.append(Entry(labelframe, width=63, background="lightblue", font=DATA_FONT))
+
+            # iterate maindictionary, find the main key (primarykey) whose sub-key 'Name' is the same as the user we want to display
+            for primarykey, primaryvalue in maindictionary.items():
+                # if name of user in maindictionary matches the one we are finding, append his profile info into entry box
+                if str(maindictionary[primarykey]['Name']).replace("['", "").replace("']", "") == str(i):
+                    # for each entry box in list, insert text into it
+                    entryboxlist[0].insert(0,
+                                           str(maindictionary[primarykey]['Name']).replace("['", "").replace("']",
+                                                                                                             "").replace(
+                                               "'", ""))
+                    entryboxlist[1].insert(0,
+                                           str(maindictionary[primarykey]['Gender']).replace("['", "").replace("']",
+                                                                                                               "").replace(
+                                               "'", ""))
+                    entryboxlist[2].insert(0,
+                                           str(maindictionary[primarykey]['Age']).replace("['", "").replace("']",
+                                                                                                            "").replace("'", ""))
 
                     # break out of for loop
                     break

@@ -33,9 +33,6 @@ class DisplayPage(tk.Frame):
         main.geometry("+%d+%d" % (xposition, yposition))
 
 
-        # initializing the displaypage frame
-        #tk.Frame.__init__(self, parent)
-
         columnlist = []
         profiledatalist = []
 
@@ -184,8 +181,6 @@ class DisplayPage(tk.Frame):
         main.attributes('-topmost', True)
         main.attributes('-topmost', False)
         main.mainloop()
-
-
 
 
 # main function for testing code, not for production use

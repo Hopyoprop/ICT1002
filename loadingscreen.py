@@ -101,7 +101,6 @@ class LoadingScreen():
 
 
         lists_from_each_functions.append(templist)
-        print "lists_from_each_functions: " + str(lists_from_each_functions)
 
 
         ##########################################################################################################
@@ -114,7 +113,6 @@ class LoadingScreen():
         #print "countries (not narrowed down to 3): " + str(list_accepted_profiles_based_on_country)
         # add this list to lists_from_each_functions
         lists_from_each_functions.append(list_accepted_profiles_based_on_country)
-        print "lists_from_each_functions: " + str(lists_from_each_functions)
 
         #print lists_from_each_functions
 
@@ -156,7 +154,7 @@ class LoadingScreen():
         #print "top3_likesdislikes: " + str(listoftop3_accepted_profiles_based_on_likesdislikes)
         # add this list to lists_from_each_functions
         lists_from_each_functions.append(listoftop3_accepted_profiles_based_on_likesdislikes)
-        print "lists_from_each_functions: " + str(lists_from_each_functions)
+        #print "lists_from_each_functions: " + str(lists_from_each_functions)
 
         #printLikesDislikes(dict_accepted_profiles_based_on_likesdislikes)
 
@@ -167,15 +165,12 @@ class LoadingScreen():
         ##########################################################################################################
         ############################################# Function 4
 
-
-
-        dict_accepted_profiles_based_on_books = processBook(userdict, maindict)
+        '''dict_accepted_profiles_based_on_books = processBook(userdict, maindict)
         # init list that will contain top 3 profiles based on books
         listoftop3_accepted_profiles_based_on_books = []
 
         # make a copy of the dictionary made by function 3 (shortlisted profiles based on likes and dislikes)
         copyof_dict_accepted_profiles_based_on_books = copy.deepcopy(dict_accepted_profiles_based_on_books)
-        print "original copydict"+str(copyof_dict_accepted_profiles_based_on_books)
         # repeat 3 times to get top 3 matches based on likes & dislikes
         for i in range(0, 3):
             # if dictionary not empty and if highest value is > 0 (meaning point is more than 0)
@@ -188,23 +183,22 @@ class LoadingScreen():
 
                 # append this profile into listoftop3_accepted_profiles_based_on_likesdislikes
                 listoftop3_accepted_profiles_based_on_books.append(str(profile_with_highest_score))
-                print "to delete: "+str(profile_with_highest_score)
                 # delete profile with highest score from the dictionary
                 del copyof_dict_accepted_profiles_based_on_books[profile_with_highest_score]
-                print "after copydict: "+str(copyof_dict_accepted_profiles_based_on_books)
 
         # delete the copy of the dicitonary (dont waste space)
         del copyof_dict_accepted_profiles_based_on_books
 
         # add this list to lists_from_each_functions
-        lists_from_each_functions.append(listoftop3_accepted_profiles_based_on_books)
+        lists_from_each_functions.append(listoftop3_accepted_profiles_based_on_books)'''
 
         ################################################################################################################
         ######################### DELETE THIS HARDCODED FUNCTION 4 DICTIONARY AND LIST (FOR TEST USE ONLY) #############
-        #dict_accepted_profiles_based_on_books = {'Jenny Wang': 20, 'Rose': 10, 'Kevin': 20, 'Teresa': 20, 'Joel Jackson': 40, 'Carol':20, 'Shelley':20, 'Lisa Marie':0}
-        #listoftop3_accepted_profiles_based_on_books = ['Joel Jackson', 'Carol', 'Shelley']
-        #lists_from_each_functions.append(listoftop3_accepted_profiles_based_on_books)
-        print "lists_from_each_functions: " + str(lists_from_each_functions)
+        dict_accepted_profiles_based_on_books = {'Jenny Wang': 20, 'Rose': 10, 'Kevin': 20, 'Teresa': 20, 'Joel Jackson': 40, 'Carol':20, 'Shelley':20, 'Lisa Marie':0}
+        listoftop3_accepted_profiles_based_on_books = ['Joel Jackson', 'Carol', 'Shelley']
+
+        #listoftop3_accepted_profiles_based_on_books = []
+        lists_from_each_functions.append(listoftop3_accepted_profiles_based_on_books)
 
         ################################################################################################################
 
@@ -221,7 +215,6 @@ class LoadingScreen():
         #print "bestMatched: " + str(bestMatched)
         lists_from_each_functions.append(bestMatched)
         #print "updated list: " + str(lists_from_each_functions)
-        print "lists_from_each_functions: " + str(lists_from_each_functions)
 
         # after finish function 5, update the progresstext label
         progresstext.config(text="Done!!")

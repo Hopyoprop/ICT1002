@@ -397,43 +397,6 @@ def insert_profile(maindicti):
 
 
 ##########################################################################################################
-# definition to check if 'profiles' table exists. If not, create table.
-def check_table_exists(maindict):
-    dict_key = []
-    column_names = ""
-
-    # Append maindict keys (type: <dict>) as a list.
-    for p_key, profile in maindict.items():
-        for k, v in profile.items():
-            dict_key.append(k)
-
-    # Append keys (type: <str>) to a list. This will be used as the table's column names.
-    # Break if the next key-to-append is already declared (eg. same as the first column).
-    column_names += "%s varchar primary key," % dict_key[0]
-    for k in dict_key[1:]:
-        if k != dict_key[0]:
-            column_names += "%s varchar," % k
-        else:
-            break
-    column_names = column_names[:-1]
-
-    # try to connect (this action will create a .db file in same directory if it does not exist)
-    conn = sqlite3.connect('userprofiles.db')
-    # create cursor object, and assign it to variable called c
-    c = conn.cursor()
-
-    # create a table with its respective column names
-    table = "profiles"
-    c.execute("""CREATE TABLE IF NOT EXISTS {:} ({:})""".format(table,column_names))
-
-    # commit changes (instructions given to the cursor)
-    conn.commit()
-    # close the connection
-    conn.close()
-
-
-##########################################################################################################
-
 
 # main function for testing code purposes
 if __name__ == "__main__":
@@ -461,6 +424,6 @@ if __name__ == "__main__":
     viewusers()'''
     #print getlistofcolumns('profiles')
 
-    result = createmaindictionary()
+    #result = createmaindictionary()
 
 

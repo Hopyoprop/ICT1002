@@ -165,8 +165,10 @@ if __name__ == "__main__":
     ##########################################################################################################
     # start up the GUI with loginpage
     gv.init() #uncomment
+
     # call function to retrieve from a .txt file, which stores names of tables to create, and their column names
     dbinfo = pull()
+
     # call function to create the DB file with respective tables and names
     createDBfile(dbinfo)
 
@@ -180,7 +182,6 @@ if __name__ == "__main__":
     # Function to process data from selected sample files into a dictionary
     maindict = processSamples(maindict)
 
-
     # Loop each user profile separately and insert data into db.
     i = 0
     for i in range(0, len(maindict.items())):
@@ -189,114 +190,29 @@ if __name__ == "__main__":
 
     # call function to create the main dictionary by retrieving all data from database
     result = createmaindictionary()
-    #print result
-
 
     # try to get current user's profile from database
     currentuserdatalist = getuserprofiles([str(gv.currentuser)])
 
     # if there was a record of current user found in the db
     if currentuserdatalist != 0:
-        #print str(currentuserdatalist[1])
         # pop the entry of the currentuser from the main dictionary as he does not need to be matched with himself
         templist = []
         copyofdict = {}
         copyofdict = result
         # to compare against element in maindict, the name has to be an element in a list, rather than just a string
         templist.append(str(currentuserdatalist[1]))
-        #print templist
 
         for key,value in copyofdict.items():
             # if name in the dictionary matches user's name, remove his own record fromo maindictionary (result)
-
-            #print copyofdict[key]['Name']
-            #print templist
             if copyofdict[key]['Name'] == templist:
                 del result[key]
 
     # call function to set global variable 'maindictionary'
     setmaindictionary(result)
 
-    #listofuserlists = [["Teresa","Rose", "Carol", "Kevin", "Shelley", "Ho Xiu Qi", "Test"],
-                       #["Rose", "Carol", "Kevin", "Shelley", "Ho Xiu Qi", "Test"],
-                       #["Rose", "Carol", "Kevin", "Shelley", "Ho Xiu Qi"],
-                       #["Rose", "Carol", "Kevin", "Shelley"], ["Rose", "Carol", "Kevin"]]
-    #gv.setlist_of_shortlisted_users(listofuserlists)
-
-
     ##########################################################################################################
     # Once adding of user profiles (any) into db, continue with the program
     windowtraverser()
 
     exit()
-
-    ##########################################################################################################
-    ##########################################################################################################
-
-    # if want to test your code, go to 'loadingscreen.py'. They are called there and not below here anymore  #
-
-    ##########################################################################################################
-    ##########################################################################################################
-
-    ''''##########################################################################################################
-    # Function 2
-    # TEMPORARY PLACEHOLDER DICT. USERLIST WILL BE THE USER GUI INPUTTED VALUES
-    maindict = gv.maindictionary
-    userdict = {'Name': ['Michael Morton'], 'Gender': ['Male'], 'Age': ['29'],
-                'Dislikes': ['durian', ' garlic', ' swimming'], 'Acceptable_age_range': ['18', '29'],
-                'Acceptable_country': ['Singapore', ' China'],
-                'Books': ['Mere Christianity', 'Knowing God', 'The problem of Pain', 'The God who is there',
-                          'The reason for God: belief in an age of skepticism',
-                          'Experiencing God: knowing and doing the will of God, work book'],
-                'Likes': ['hotpot', ' chicken and chops', ' chilli', ' roses', ' movies'], 'Country': ['Singapore']}
-    acceptedcountry = {} # TEMPORARY LOCATION. TO BE MOVED. WILL STORE THE SCALED DOWN MAINDICT WITH USERS OF ACCEPTABLE
-    # COUNTRY
-    # First round of Processing for Acceptable Countries, returns a dict with accepted users
-    #acceptedcountry = processUser(userdict, maindict)
-
-    #printCountries(userdict, acceptedcountry)
-    ##########################################################################################################
-    # Function 3
-    #acceptedlikesdislikes = processInterest(userdict, maindict)
-
-    #printLikesDislikes(acceptedlikesdislikes)
-    ##########################################################################################################
-    # Function 4
-    acceptedbooks = processBook(userdict, maindict)
-    print maindict
-    print(acceptedbooks)
-    ##########################################################################################################
-    # Function 5
-    bestMatched = processMatches(acceptedcountry, acceptedlikesdislikes, acceptedbooks, userdict, maindict)
-    print(bestMatched)
-
-    ##########################################################################################################
-    # once processing done, take dictionary/list of user input and compare with each dictionary of processed profile
-    # DTF_Match()
-
-    # print maindict[0]
-    # print maindict[1]
-    # print maindict[2]
-    # print maindict[3]
-    # print maindict[4]
-    # print maindict[5]
-    # print maindict[6]
-    # print maindict[7]
-    # print maindict[8]
-    # print maindict[9]
-
-    # Output to a CSV File
-    # TO DO
-
-    #func 4 data
-    #{'Angela Little': 40, 'Joel Jackson': 10, 'Rose': 0, 'Jenny Wang': 130, 'Teresa': 30, 'Lisa Marie': 50, 'Carol': 40, 'Shelley': 0, 'Kevin': 0, 'Michael Jackson': 130}'''
-
-	
-
-
-
-
-
-
-
-
