@@ -12,9 +12,9 @@ from sqlfunctions import *
 from loginpage import *
 from displayprofilepage import *
 from loadingscreen import *
+import loadingscreen as loadscreen
 from resultspage import *
 import globalvars as gv
-from PIL import Image, ImageTk, ImageSequence
 
 def processSamples(maindict):
 
