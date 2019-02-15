@@ -14,6 +14,7 @@ def setcurrentusername(a):
 def setpagetodisplay(a):
     global showpagecommand
     showpagecommand = a
+    print showpagecommand
 
 # function to update global variable containing main dictionary (used by functions)
 def setuserdictionary(a):
@@ -24,12 +25,12 @@ def setuserdictionary(a):
 def setmaindictionary(a):
     global maindictionary
     maindictionary = a
-    #print "in global: " + str(maindictionary)
 
 # function to update global variable that is type list, which contains sublists with usernames of shortlisted users
 def setlist_of_shortlisted_users(a):
     global list_of_shortlisted_users
     list_of_shortlisted_users = a
+
 
 def getshortlisteduserslist():
     global list_of_shortlisted_users

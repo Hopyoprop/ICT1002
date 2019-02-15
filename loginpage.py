@@ -14,8 +14,7 @@ TITLE = ("Forte", 35)
 #######################################################################################################################
 #######################################################################################################################
 
-# definition for LoginPage frame, it will inherit a tk.Frame
-class LoginPage(tk.Frame):
+class LoginPage():
     # parent is our parent class (in this case it is 'Head')
     def __init__(self, dimensions, titleofwindow):
 
@@ -39,11 +38,6 @@ class LoginPage(tk.Frame):
         # defining a frame to work on (display things on)
         containerframe = tk.Frame(main)
         containerframe.grid(row=0, column=0, sticky="nsew")
-
-
-        # initializing the loginpage frame
-        #tk.Frame.__init__(self, parent)
-
 
         # login button click event function
         def loginclick():

@@ -13,6 +13,7 @@ from function5 import *
 import operator
 import copy
 from threading import Thread
+from events import Events
 
 
 LABEL_FONT = ("Forte", 13)
@@ -47,32 +48,20 @@ class LoadingScreen():
         ##################################################################################################################
         ##################################################################################################################
         # gif definition
-        self.parent = main
-        self.canvas = tk.Canvas(main, width=400, height=300, background='lightblue', highlightthickness=0)
-        self.canvas.pack()
-        self.sequence = [ImageTk.PhotoImage(img)
-                         for img in ImageSequence.Iterator(
-                Image.open(
-                    './loadgif.gif'))]
+        #self.parent = main
+        #self.canvas = tk.Canvas(main, width=400, height=300, background='lightblue', highlightthickness=0)
+        #self.image = ImageTk.PhotoImage(Image.open("./loading.png"))
+        #self.canvas.pack()
 
 
-        self.image = self.canvas.create_image(int(200), int(150), image=self.sequence[0])
-        #self.update_Thread.start()
-        # call function to animate loading screen gif
-        self.animate(1)
-
-        #
-        # self.queue = Queue.Queue()
-        # ThreadedTask(self.queue).start()
-        # self.parent.after(0, tc.animate(main, 1))
         ##################################################################################################################
         ##################################################################################################################
 
         # label definitions
-        loadingtext = Label(main, text="You can admire this gif while its loading...", font=LABEL_FONT, background='lightblue')
+        loadingtext = Label(main, text="We are processing your matches, it will take some time", font=LABEL_FONT, background='lightblue')
         loadingtext.pack(anchor='center')
 
-        progresstext = Label(main, text="0% done...", font=TEXT_FONT, background='lightblue', fg='darkgreen')
+        progresstext = Label(main, text="Loading...", font=TEXT_FONT, background='lightblue', fg='darkgreen')
         progresstext.pack(anchor='center')
 
 
@@ -86,8 +75,6 @@ class LoadingScreen():
 
             # define list of shortlisted users from each function called (all results are stored as list, and appended into this list)
             lists_from_each_functions = []
-
-
 
             ##################################################################################################################
             ############################################# Function 1
@@ -162,7 +149,7 @@ class LoadingScreen():
             ##########################################################################################################
             ############################################# Function 4
 
-            '''dict_accepted_profiles_based_on_books = processBook(userdict, maindict)
+            dict_accepted_profiles_based_on_books = processBook(userdict, maindict)
             # init list that will contain top 3 profiles based on books
             listoftop3_accepted_profiles_based_on_books = []
 
@@ -187,16 +174,16 @@ class LoadingScreen():
             del copyof_dict_accepted_profiles_based_on_books
 
             # add this list to lists_from_each_functions
-            lists_from_each_functions.append(listoftop3_accepted_profiles_based_on_books)'''
+            lists_from_each_functions.append(listoftop3_accepted_profiles_based_on_books)
 
             ################################################################################################################
             ######################### DELETE THIS HARDCODED FUNCTION 4 DICTIONARY AND LIST (FOR TEST USE ONLY) #############
-            dict_accepted_profiles_based_on_books = {'Jenny Wang': 20, 'Rose': 10, 'Kevin': 20, 'Teresa': 20,
+            '''dict_accepted_profiles_based_on_books = {'Jenny Wang': 20, 'Rose': 10, 'Kevin': 20, 'Teresa': 20,
                                                      'Joel Jackson': 40, 'Carol': 20, 'Shelley': 20, 'Lisa Marie': 0}
             listoftop3_accepted_profiles_based_on_books = ['Joel Jackson', 'Carol', 'Shelley']
 
             #listoftop3_accepted_profiles_based_on_books = []
-            lists_from_each_functions.append(listoftop3_accepted_profiles_based_on_books)
+            lists_from_each_functions.append(listoftop3_accepted_profiles_based_on_books)'''
 
             ################################################################################################################
 
@@ -224,20 +211,14 @@ class LoadingScreen():
             gv.setlist_of_shortlisted_users(lists_from_each_functions)
 
 
-
             main.quit()
             main.destroy()
-            #tkmessagebox.showinfo("before main.quit", "Before main.quit()")
 
         # end of function definition of call_all_functions()
 
 
 
         ##################################################################################################################
-
-        # instantiate a PROCESS and target 'gif_subprocess()' and start it
-        # -> code goes here
-        #gv.setstopcommand("start")
 
         # get user's dictionary from global variable 'userdictionary'
         # (this was added at 'displayprofilepage' upon clicking 'Find Match!' button
@@ -247,27 +228,15 @@ class LoadingScreen():
         # get maindictionary
         maindict = gv.maindictionary
 
-
+        main.mainloop()
         # set stop command to a default value (other than "stop" which would stop the UI)
-        gif_thread = Thread(target=call_all_functions, args=(userdict,maindict))
-
-        gif_thread.start()
+        call_all_functions(userdict,maindict)
         print "Hi in main thread"
 
-        main.mainloop()
-        print "After mainloop"
-        #gif_thread.join()
+        #main.mainloop()
+
+        #gif_thread.is_alive = False
         gv.setpagetodisplay("openFindMatchResultsPage")
-
-
-
-
-
-    def animate(self, counter):
-            self.canvas.itemconfig(self.image, image=self.sequence[counter])
-            self.parent.after(20, lambda: self.animate((counter+1) % len(self.sequence)))
-
-            self.parent.update()
 
 
 

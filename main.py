@@ -2,17 +2,10 @@ import Tkinter as tk
 import tkFileDialog as filedialog
 import glob                             # for opening files
 import os                               # for opening files
-from function2 import processUser
-from function2 import printCountries
-from function3 import processInterest
-from function3 import printLikesDislikes
-from function4 import processBook
-from function5 import processMatches
 from sqlfunctions import *
 from loginpage import *
 from displayprofilepage import *
 from loadingscreen import *
-import loadingscreen as loadscreen
 from resultspage import *
 import globalvars as gv
 
