@@ -11,7 +11,7 @@ Yeo Han, Jordan
 import requests
 import json
 import time
-#from loadingscreen import *
+
 
 def processBook(userdict, maindict):
     profiledict = maindict
