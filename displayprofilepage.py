@@ -1,3 +1,13 @@
+'''
+Display Profile Page
+Team:
+Dominic Gian
+Guang Jun
+Jun Ming
+Ho Xiu Qi
+Yeo Han, Jordan
+'''
+
 from Tkinter import *
 import Tkinter as tk
 from sqlfunctions import *
@@ -181,11 +191,3 @@ class DisplayPage(tk.Frame):
         main.attributes('-topmost', True)
         main.attributes('-topmost', False)
         main.mainloop()
-
-
-# main function for testing code, not for production use
-if __name__ == "__main__":
-    gv.setcurrentusername("a")
-    DisplayPage("500x570", "MatchMakeMe - My Profile")
-
-

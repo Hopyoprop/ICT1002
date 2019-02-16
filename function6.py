@@ -1,3 +1,13 @@
+'''
+Function 6
+Team:
+Dominic Gian
+Guang Jun
+Jun Ming
+Ho Xiu Qi
+Yeo Han, Jordan
+'''
+
 import csv
 import sqlite3
 import datetime as dt
@@ -45,11 +55,3 @@ def getFunctionList(receivedlist):
     # notify user that a CSV file was successfully generated in the same directory as 'main.py' script
     tkmessagebox.showinfo("CSV File Generated","CSV file has successfully been generated in current directory of script!")
     return
-
-# main function (for testing code purpose only)
-if __name__ == "__main__":
-    list = [['Michael Jackson', 'Lisa Marie', 'Teresa', 'Carol', 'Kevin', 'Rose', 'Shelley', 'Joel Jackson', 'Jenny Wang',
-             'Angela Little'], [], ['Angela Little', 'Joel Jackson', 'Rose'], ['Teresa', 'Lisa Marie', 'Carol']]
-    list1 = [['Michael Jackson', 'Lisa Marie', 'Teresa', 'Carol', 'Kevin', 'Rose', 'Shelley', 'Joel Jackson', 'Jenny Wang',
-              'Angela Little'], [], [], []]
-    getFunctionList(list)  # trying if function works

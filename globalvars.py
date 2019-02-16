@@ -1,3 +1,13 @@
+'''
+Global Variables.py
+Team:
+Dominic Gian
+Guang Jun
+Jun Ming
+Ho Xiu Qi
+Yeo Han, Jordan
+'''
+
 def init():
     global currentuser
     global showpagecommand

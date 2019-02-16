@@ -1,8 +1,13 @@
-import Tkinter as tk
-import tkFileDialog as filedialog
-import glob                             # for opening files
-import os                               # for opening files
-from sqlfunctions import *
+'''
+Main Function
+Team:
+Dominic Gian
+Guang Jun
+Jun Ming
+Ho Xiu Qi
+Yeo Han, Jordan
+'''
+
 from loginpage import *
 from displayprofilepage import *
 from loadingscreen import *
@@ -157,7 +162,7 @@ def windowtraverser():
 if __name__ == "__main__":
     ##########################################################################################################
     # start up the GUI with loginpage
-    gv.init() #uncomment
+    gv.init()
 
     # call function to retrieve from a .txt file, which stores names of tables to create, and their column names
     dbinfo = pull()

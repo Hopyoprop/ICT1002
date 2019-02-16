@@ -1,8 +1,12 @@
-from Tkinter import *
-import Tkinter as tk
-import tkMessageBox as tkmessagebox
-import re
-from sqlfunctions import *
+'''
+Login Page
+Team:
+Dominic
+Guang Jun
+Jun Ming
+Xiu Qi
+Yeo Han, Jordan
+'''
 from main import *
 from globalvars import *
 
@@ -125,7 +129,3 @@ class LoginPage():
 
 #######################################################################################################################
 #######################################################################################################################
-
-# main function for testing code, not for production use
-if __name__ == "__main__":
-    LoginPage("500x300", "MatchMakeMe - Login")

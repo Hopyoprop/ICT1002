@@ -1,10 +1,10 @@
 '''
 Function 2
 Team:
-Dominic
+Dominic Gian
 Guang Jun
 Jun Ming
-Xiu Qi
+Ho Xiu Qi
 Yeo Han, Jordan
 '''
 
@@ -29,6 +29,7 @@ def processUser(userdict, maindict):
 
     return profilelist
 
+# For debugging purposes on the console
 def printCountries(userdict, acceptedcountry):
     print "Accepted Countries from User Profile: %s" % (",".join(userdict['Acceptable_country']))
     for i in acceptedcountry:

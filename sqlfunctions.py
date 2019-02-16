@@ -1,6 +1,15 @@
+'''
+SQL Functions
+Team:
+Dominic Gian
+Guang Jun
+Jun Ming
+Ho Xiu Qi
+Yeo Han, Jordan
+'''
+
 import sqlite3
 import os.path
-import time
 
 ##########################################################################################################
 # definition to check if it is the first time Application is running / if 'userprofiles.db' exists
@@ -394,36 +403,3 @@ def insert_profile(maindicti):
     conn.commit()
     # close the connection
     conn.close()
-
-
-##########################################################################################################
-
-# main function for testing code purposes
-if __name__ == "__main__":
-    # try to login with hardcoded username and password (below)
-    #r = login("swaglord", "1g0t@BBC!")
-
-    # add new user(s) manually through hardcoding
-    #addnewuser("swaglord","1g0t@BBC!")
-    #addnewuser("xiuqiho","password")
-    #deleteuser("aaa")
-    #authenticateUser("xiuqiho","password")
-
-    '''tempdict = {'Teresa':{'Name': ['Teresa'],
-                           'Gender': ['F'],
-                           'Age': ['22'],
-                           'Dislikes': ['garlic', ' durian', ' swimming'],
-                           'Acceptable_age_range': ['18', '30'],
-                           'Acceptable_country': ['Singapore', ' China'],
-                           'Books': ['Total Truth: Liberating Christianity from its Cultural Captivity',
-                                'Reflections on the Psalms', 'Intercessory Prayer: How God Can Use Your Prayers to Move Heaven Earth',
-                                     "God 's Favor - Breath Of Heaven", 'Letters to Malcolm: Chiefly on Prayer'],
-                           'Likes': ['hotpot', ' chilli', ' chicken and chops', ' roses', ' movies'],
-                           'Country': ['Singapore']}}
-    adduserprofile(tempdict)
-    viewusers()'''
-    #print getlistofcolumns('profiles')
-
-    #result = createmaindictionary()
-
-

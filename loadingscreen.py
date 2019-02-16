@@ -1,10 +1,15 @@
+'''
+Loading Screen
+Team:
+Dominic Gian
+Guang Jun
+Jun Ming
+Ho Xiu Qi
+Yeo Han, Jordan
+'''
+
 from Tkinter import *
 import Tkinter as tk
-from PIL import Image, ImageTk, ImageSequence
-import tkMessageBox as tkmessagebox
-import time
-from sqlfunctions import *
-from globalvars import *
 import globalvars as gv
 from function2 import *
 from function3 import *
@@ -12,8 +17,6 @@ from function4 import *
 from function5 import *
 import operator
 import copy
-from threading import Thread
-from events import Events
 
 
 LABEL_FONT = ("Forte", 13)
@@ -44,15 +47,6 @@ class LoadingScreen():
 
         # set the location of 'main'
         main.geometry("+%d+%d" % (xposition, yposition))
-
-        ##################################################################################################################
-        ##################################################################################################################
-        # gif definition
-        #self.parent = main
-        #self.canvas = tk.Canvas(main, width=400, height=300, background='lightblue', highlightthickness=0)
-        #self.image = ImageTk.PhotoImage(Image.open("./loading.png"))
-        #self.canvas.pack()
-
 
         ##################################################################################################################
         ##################################################################################################################
@@ -216,8 +210,6 @@ class LoadingScreen():
 
         # end of function definition of call_all_functions()
 
-
-
         ##################################################################################################################
 
         # get user's dictionary from global variable 'userdictionary'
@@ -237,12 +229,3 @@ class LoadingScreen():
 
         #gif_thread.is_alive = False
         gv.setpagetodisplay("openFindMatchResultsPage")
-
-
-
-# main function for testing code, not for production use
-if __name__ == "__main__":
-    LoadingScreen("400x400", "MatchMakeMe - Loading")
-
-
-

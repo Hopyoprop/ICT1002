@@ -1,10 +1,10 @@
 '''
 Function 3
 Team:
-Dominic
+Dominic Gian
 Guang Jun
 Jun Ming
-Xiu Qi
+Ho Xiu Qi
 Yeo Han, Jordan
 '''
 

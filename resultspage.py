@@ -1,10 +1,18 @@
+'''
+Results Page
+Team:
+Dominic Gian
+Guang Jun
+Jun Ming
+Ho Xiu Qi
+Yeo Han, Jordan
+'''
+
 from globalvars import *
 import globalvars as gv
 import Tkinter as tk
-from Tkinter import *
 import ttk
 from Tkinter import *
-import tkMessageBox as tkmessagebox
 from function6 import *
 
 TITLE_FONT = ("Forte", 22)
@@ -389,14 +397,3 @@ class ResultsPage():
 
             # pack the label frame (this is the record of one user)
             labelframe.pack()
-
-
-
-
-# main function for testing code, not for production use
-if __name__ == "__main__":
-    listofuserlists = [["Teresa","Rose","Carol","Kevin","Shelley","Ho Xiu Qi","Test"],["Rose","Carol","Kevin","Shelley","Ho Xiu Qi","Test"],["Rose","Carol","Kevin","Shelley","Ho Xiu Qi"],
-                                     ["Rose","Carol","Kevin","Shelley"], ["Rose","Carol","Kevin"]]
-    gv.setlist_of_shortlisted_users(listofuserlists)
-    gv.setmaindictionary({'Angela Little': {'Name': ['Angela Little'], 'Gender': ['F'], 'Age': ['22'], 'Dislikes': ['hotpot, chilli, roses, movies'], 'Acceptable_age_range': ['18,30'], 'Acceptable_country': ['Singapore, China'], 'Books': ['Christian reflections,The red tent,The God who is there,God in the Dock: Essays on Theology and Ethics,Total truth: liberating christianity from its cultural captivity,Redeeming love'], 'Likes': ['garlic, durian, swimming, chicken and chops'], 'Country': ['Singapore']}, 'Joel Jackson': {'Name': ['Joel Jackson'], 'Gender': ['Male'], 'Age': ['29'], 'Dislikes': ['durian, garlic, swimming'], 'Acceptable_age_range': ['18,33'], 'Acceptable_country': ['Singapore, China, USA'], 'Books': ['Human Philosohy,Nicomachean Ethics,Summa Theologiae,Meditations on First Philosophy,Essay Concerning Human Understanding,Principles of Human Knowledge,Enquiry Concerning Human Understanding,Social Contract,Phenomenology of Spirit'], 'Likes': ['hotpot, chicken and chops, chilli, roses, movies'], 'Country': ['Singapore']}, 'Rose': {'Name': ['Rose'], 'Gender': ['F'], 'Age': ['25'], 'Dislikes': ['chilli,garlic,basketball'], 'Acceptable_age_range': ['18,35'], 'Acceptable_country': ['Singapore, China, UK'], 'Books': ['Human Philosohy book,Adventures in Human Being,Towards the Philosophy,Essay Related Human Topics,Human Being Shall Know Philosohy'], 'Likes': ['fish, honey, chocolate, roses, durian, running'], 'Country': ['Singapore']}, 'Jenny Wang': {'Name': ['Jenny Wang'], 'Gender': ['F'], 'Age': ['25'], 'Dislikes': ['durian, garlic, swimming'], 'Acceptable_age_range': ['23,60'], 'Acceptable_country': ['China, USA,Singapore'], 'Books': ['Mere Christianity,Knowing God,How should we then live? the rise and decline of western thought and culture,The problem of Pain,The God who is there,The reason for God: belief in an age of skepticism,Experiencing God: knowing and doing the will of God, work book,'], 'Likes': ['hotpot, chicken and chops, chilli, roses, movies'], 'Country': ['China']}, 'Teresa': {'Name': ['Teresa'], 'Gender': ['F'], 'Age': ['22'], 'Dislikes': ['garlic, durian, swimming'], 'Acceptable_age_range': ['18,30'], 'Acceptable_country': ['Singapore, China'], 'Books': ["Total Truth: Liberating Christianity from its Cultural Captivity,Reflections on the Psalms,Intercessory Prayer: How God Can Use Your Prayers to Move Heaven Earth,God 's Favor - Breath Of Heaven,Letters to Malcolm: Chiefly on Prayer"], 'Likes': ['hotpot, chilli, chicken and chops, roses, movies'], 'Country': ['Singapore']}, 'Test': {'Name': ['Test'], 'Gender': ['Memale'], 'Age': ['69'], 'Dislikes': ['no 6'], 'Acceptable_age_range': ['69,96'], 'Acceptable_country': ['SSG'], 'Books': ['how to 6'], 'Likes': ['6'], 'Country': ['SGGGGGG']}, 'Lisa Marie': {'Name': ['Lisa Marie'], 'Gender': ['F'], 'Age': ['22'], 'Dislikes': ['garlic, durian, swimming'], 'Acceptable_age_range': ['18,30'], 'Acceptable_country': ['Singapore, China'], 'Books': ['Desiring God Meditations of a Christian Hedonist,God Knowing,God Favor: Breath of Heaven,The God is there,The reason for God: in an age of skepticism,Experiencing God: knowing the will of God, work book'], 'Likes': ['hotpot, chilli, chicken and chops, roses, movies'], 'Country': ['Singapore']}, 'Ho Xiu Qi': {'Name': ['Ho Xiu Qi'], 'Gender': ['Male'], 'Age': ['21'], 'Dislikes': ['Aloysius Chong'], 'Acceptable_age_range': ['18-24'], 'Acceptable_country': ['Singapore,Japan,Korea'], 'Books': ['Reigokai,Mushoku Tensei'], 'Likes': ['Games,Anime,Basketball,Badminton'], 'Country': ['Singapore']}, 'Carol': {'Name': ['Carol'], 'Gender': ['F'], 'Age': ['23'], 'Dislikes': ['football, hunting, swimming'], 'Acceptable_age_range': ['23,50'], 'Acceptable_country': ['Singapore, China'], 'Books': ['Christian reflections,The red tent,The God who is there,God in the Dock: Essays on Theology and Ethics,Total truth: liberating christianity from its cultural captivity,Redeeming love,'], 'Likes': ['Chicken rice,hotpot, Carrot cake, chilli crab, roses, movies'], 'Country': ['USA']}, 'Shelley': {'Name': ['Shelley'], 'Gender': ['Female'], 'Age': ['24'], 'Dislikes': ['chilli,garlic,basketball'], 'Acceptable_age_range': ['18,35'], 'Acceptable_country': ['Singapore, China, USA'], 'Books': ['Human Philosohy book,Adventures in Human Being,Towards the Philosophy,Essay Related Human Topics,Human Being Shall Know Philosohy'], 'Likes': ['fish, honey, chocolate, roses, durian, running'], 'Country': ['China']}, 'Kevin': {'Name': ['Kevin'], 'Gender': ['Male'], 'Age': ['25'], 'Dislikes': ['curry,garlic,basketball'], 'Acceptable_age_range': ['10,33'], 'Acceptable_country': ['Singapore'], 'Books': ['Human Philosohy,Adventures in Human Being,Meditations on the Philosophy,Essay Concerning Human topic,Principles of Human being'], 'Likes': ['fish,chicken, chocolate, roses, durian, movies'], 'Country': ['Singapore']}, 'Michael Jackson': {'Name': ['Michael Jackson'], 'Gender': ['Male'], 'Age': ['29'], 'Dislikes': ['durian, garlic, swimming'], 'Acceptable_age_range': ['18,29'], 'Acceptable_country': ['Singapore, China'], 'Books': ['Mere Christianity,Knowing God,The problem of Pain,The God who is there,The reason for God: belief in an age of skepticism,Experiencing God: knowing and doing the will of God, work book'], 'Likes': ['hotpot, chicken and chops, chilli, roses, movies'], 'Country': ['Singapore']}})
-    ResultsPage("550x700", "MatchMakeMe - Match Results")
