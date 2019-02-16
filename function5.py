@@ -14,10 +14,15 @@ def processMatches(acceptedcountry, likesdislikes, books, userdict, maindict):
 
 	combine_matches = {}
 	for i in country:									# For each user in acceptablecountry list,
-		if i in likesdislikes:							#  If user exists in likesdislikes dictionary,
-			combine_matches[i] = likesdislikes.get(i)	#   Add user and points to ccombine_matches dict.
-		if i in books:									#  Or user exists in books dictionary,
-			combine_matches[i] = books.get(i)			#   Add user and points to ccombine_matches dict.
+		if i in likesdislikes and i in books:			#  If user exists in both likesdislikes & books dictionary,
+			add_points = likesdislikes[i] + books[i]	#   Add points from both dict for that user
+			combine_matches[i] = add_points				#   Add user and points to combine_matches dict
+		elif i in likesdislikes:						#  Elif user exists in likesdislikes dictionary only,
+			combine_matches[i] = likesdislikes.get(i)
+		elif i in books:								#  Elif user exists in books dictionary only,
+			combine_matches[i] = books.get(i)
+		else:
+			continue
 
 	if bool(combine_matches):																		# Check if combine_matches dict has keys:values.
 			top_3 = pointsRanking(combine_matches,userdict,maindict,country,likesdislikes,books)	#  If it has values, perform best_matching algo.
