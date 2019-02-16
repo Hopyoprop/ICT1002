@@ -25,7 +25,7 @@ def processBook(userdict, maindict):
     p = 0
     userbooklist = [] # user's book list
     for i in userbooks:
-        print "Hi"
+        print "Book to check: " + str(i)
         while y > p:
             # print(userbooks[p])
             urlstring = "https://www.googleapis.com/books/v1/volumes?q=%22intitle:" + str(userbooks[p])
@@ -57,7 +57,7 @@ def processBook(userdict, maindict):
         userbooklist.remove("N/A")
 
     for i in profiledict:
-        print "Hey"
+        print "Checking book interests for: " + str(profiledict[i]['Name']) + " in maindictionary"
         currentuserpoints = 0
         profilebooks = profiledict[i]['Books']
         # print(profiledict[i]['Name'],profilebooks)
@@ -66,7 +66,7 @@ def processBook(userdict, maindict):
         p = 0
 
         checkgender = maindict[i]['Gender'][0][0]  # Obtain the Initial of the Gender
-        print(checkgender)
+        #print(checkgender)
         checkage = int("".join(maindict[i]['Age']))
 
         # Gender check and Age check for if current profile is correct gender and inside acceptable age of user.

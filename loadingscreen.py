@@ -20,6 +20,7 @@ import copy
 from PIL import ImageTk, Image
 
 
+
 LABEL_FONT = ("Forte", 13)
 TEXT_FONT = ("Forte", 13)
 
@@ -161,7 +162,7 @@ class LoadingScreen():
                 # if dictionary not empty and if highest value is > 0 (meaning point is more than 0)
                 if len(copyof_dict_accepted_profiles_based_on_books) != 0 and \
                         max(copyof_dict_accepted_profiles_based_on_books.iteritems(), key=operator.itemgetter(1))[1] > 0:
-                    print copyof_dict_accepted_profiles_based_on_books
+                    #print copyof_dict_accepted_profiles_based_on_books
                     # get key (profile) with highest score, if theres a tie, only one of the profiles is returned
                     profile_with_highest_score = \
                     max(copyof_dict_accepted_profiles_based_on_books.iteritems(), key=operator.itemgetter(1))[0]
@@ -210,7 +211,6 @@ class LoadingScreen():
             # (list of shortlisted Usernames from each function)
             gv.setlist_of_shortlisted_users(lists_from_each_functions)
 
-
             main.quit()
             main.destroy()
 
@@ -228,7 +228,5 @@ class LoadingScreen():
         main.after(50, lambda: call_all_functions(userdict,maindict))
 
         main.mainloop()
-
-        print "Hi in main thread"
 
         gv.setpagetodisplay("openFindMatchResultsPage")

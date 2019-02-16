@@ -12,30 +12,6 @@ import sqlite3
 import os.path
 
 ##########################################################################################################
-# definition to check if it is the first time Application is running / if 'userprofiles.db' exists
-# and to initiate a db connection
-def login(username, password):
-    # try to connect to the .db file
-    try:
-        # call function to check if user exists in db
-        returnvalue = authenticateUser(username,password)
-
-        # if returned value from authenticateUser() is 0 (no such username and password)
-        if returnvalue == 0:
-            # print "No such user!"
-            return 0
-        elif returnvalue == 1:
-            # print "User found!"
-            # ------- call function to close/hide login UI, and call function to process sample files into db #
-            return 1
-        elif returnvalue == 2:
-            # print "Database has more than one such username and password!"
-            return 0
-
-    except sqlite3.Error():
-        print "Error opening the .db file"      ################ Replace with messagebox instead of print once GUI done
-
-##########################################################################################################
 # definition to pull table names and column names into list from "dbinfo.txt" text file in same directory
 def pull():
     # if the 'dbinfo.txt' file does not exist, create a default version of it
@@ -119,6 +95,30 @@ def createDBfile(dbinfo):
     return
 
 ##########################################################################################################
+# definition to check if it is the first time Application is running / if 'userprofiles.db' exists
+# and to initiate a db connection
+def login(username, password):
+    # try to connect to the .db file
+    try:
+        # call function to check if user exists in db
+        returnvalue = authenticateUser(username,password)
+
+        # if returned value from authenticateUser() is 0 (no such username and password)
+        if returnvalue == 0:
+            # print "No such user!"
+            return 0
+        elif returnvalue == 1:
+            # print "User found!"
+            # ------- call function to close/hide login UI, and call function to process sample files into db #
+            return 1
+        elif returnvalue == 2:
+            # print "Database has more than one such username and password!"
+            return 0
+
+    except sqlite3.Error():
+        print "Error opening the .db file"      ################ Replace with messagebox instead of print once GUI done
+
+##########################################################################################################
 # definition to authenticate user (see if the user's input username and password exists in userprofiles.db
 def authenticateUser(username,password):
     # try to connect (this action will create a .db file in same directory if it does not exist)
@@ -165,50 +165,13 @@ def addnewuser(username, password):
             c.execute("INSERT INTO userprofs (username, password) VALUES (?,?)", (username, password))
             # commit changes (instructions given to the cursor)
             conn.commit()
+            # close the connection
+            conn.close()
         return 1
 
     except:
-        print "In exit"
+        print "Unable to add new user - in 'addnewuser()' of 'sqlfunctions.py'"
         return 0
-
-    # close the connection
-    conn.close()
-
-
-##########################################################################################################
-# definition to delete a single profile (login credentials) into the 'userprofs' table
-def deleteuser(user):
-    # try to connect (this action will create a .db file in same directory if it does not exist)
-    conn = sqlite3.connect('userprofiles.db')
-    # create cursor object, and assign it to variable called c
-    c = conn.cursor()
-
-    try:
-        # delete row of data in the table with same username and password
-        c.execute("DELETE FROM userprofs WHERE username = (?)",(user,))
-
-        # commit changes (instructions given to the cursor)
-        conn.commit()
-    except:
-        conn.close()
-        return 0
-
-    # close the connection
-    conn.close()
-    return 1
-
-##########################################################################################################
-# definition to select all user profiles (accounts) and display from database - for coding use only
-def viewusers():
-    # try to connect (this action will create a .db file in same directory if it does not exist)
-    conn = sqlite3.connect('userprofiles.db')
-    # create cursor object, and assign it to variable called c
-    c = conn.cursor()
-
-    c.execute("SELECT * FROM userprofs")
-    print c.fetchall()
-    conn.commit()
-    conn.close()
 
 ##########################################################################################################
 # definition to get list of column names from database based on specified table name
@@ -288,9 +251,6 @@ def createmaindictionary():
     else:
         dcount = 0
         for record in fetchedrecords:
-            # get the name of user of current record
-            #nameofuser = record[1]
-            #nameofuser = str(nameofuser).replace("u'","'")
 
             # slice the record (remove first field which represents the primary key 'Username')
             temprecordlist = record[1:]
@@ -358,12 +318,8 @@ def adduserprofile(profiledatainlist):
         return 0
 
 ##########################################################################################################
-##########################################################################################################
 # definition to insert all user profile data into the 'userprofs' table
 def insert_profile(maindicti):
-
-    # Before inserting data, check if db table exists. If not, create one.
-    # check_table_exists(maindicti)
 
     user_values_list = []
 

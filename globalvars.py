@@ -24,7 +24,7 @@ def setcurrentusername(a):
 def setpagetodisplay(a):
     global showpagecommand
     showpagecommand = a
-    print showpagecommand
+    #print showpagecommand
 
 # function to update global variable containing main dictionary (used by functions)
 def setuserdictionary(a):
