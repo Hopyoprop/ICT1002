@@ -1,10 +1,10 @@
 '''
 Display Profile Page
 Team:
-Dominic Gian
-Guang Jun
-Jun Ming
+Chua Guang Jun
+Dominic Keeley Gian
 Ho Xiu Qi
+Lee Jun Ming
 Yeo Han, Jordan
 '''
 

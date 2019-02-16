@@ -1,10 +1,10 @@
 '''
 Function 5
 Team:
-Dominic Gian
-Guang Jun
-Jun Ming
+Chua Guang Jun
+Dominic Keeley Gian
 Ho Xiu Qi
+Lee Jun Ming
 Yeo Han, Jordan
 '''
 def processMatches(acceptedcountry, likesdislikes, books, userdict, maindict):
@@ -101,7 +101,7 @@ def sortRanking(namelist,pointslist,userdict,maindict,country,likesdislikes,book
 		return sliced_list1
 
 	# Test Case 4 -- if sliced_list1 == 1 and sliced_list2 == 1 and sliced_list3 >=1, return.
-	elif len(sliced_list1) == 1 and len(sliced_list2) == 1 and len(sliced_list3) > 1:
+	elif len(sliced_list1) == 1 and len(sliced_list2) == 1 and len(sliced_list3) >= 1:
 		rank_priority = priorityRanking(sliced_list3,likesdislikes,books,userdict,maindict)
 		sliced_list1 += sliced_list2
 		for user in rank_priority:

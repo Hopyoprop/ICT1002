@@ -1,12 +1,13 @@
 '''
 Login Page
 Team:
-Dominic
-Guang Jun
-Jun Ming
-Xiu Qi
+Chua Guang Jun
+Dominic Keeley Gian
+Ho Xiu Qi
+Lee Jun Ming
 Yeo Han, Jordan
 '''
+
 from main import *
 from globalvars import *
 
