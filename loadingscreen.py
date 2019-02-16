@@ -17,6 +17,7 @@ from function4 import *
 from function5 import *
 import operator
 import copy
+from PIL import ImageTk, Image
 
 
 LABEL_FONT = ("Forte", 13)
@@ -52,11 +53,17 @@ class LoadingScreen():
         ##################################################################################################################
 
         # label definitions
-        loadingtext = Label(main, text="We are processing your matches, it will take some time", font=LABEL_FONT, background='lightblue')
-        loadingtext.pack(anchor='center')
+        img = ImageTk.PhotoImage(Image.open("./loading.png"))
+        imagelabel = Label(main, image=img, background='lightblue')
+        imagelabel.pack(anchor="center")
 
-        progresstext = Label(main, text="Loading...", font=TEXT_FONT, background='lightblue', fg='darkgreen')
-        progresstext.pack(anchor='center')
+        loadingtext = Label(main, text="\n\nWe are processing your matches, it will \ntake some time", font=LABEL_FONT, background='lightblue')
+        loadingtext.pack(anchor="center")
+
+        progresstext = Label(main, text="\n\nLoading...", font=TEXT_FONT, background='lightblue', fg='darkgreen')
+        progresstext.pack(anchor="center")
+
+
 
 
 
@@ -175,7 +182,6 @@ class LoadingScreen():
             '''dict_accepted_profiles_based_on_books = {'Jenny Wang': 20, 'Rose': 10, 'Kevin': 20, 'Teresa': 20,
                                                      'Joel Jackson': 40, 'Carol': 20, 'Shelley': 20, 'Lisa Marie': 0}
             listoftop3_accepted_profiles_based_on_books = ['Joel Jackson', 'Carol', 'Shelley']
-
             #listoftop3_accepted_profiles_based_on_books = []
             lists_from_each_functions.append(listoftop3_accepted_profiles_based_on_books)'''
 
@@ -219,13 +225,10 @@ class LoadingScreen():
 
         # get maindictionary
         maindict = gv.maindictionary
+        main.after(50, lambda: call_all_functions(userdict,maindict))
 
         main.mainloop()
-        # set stop command to a default value (other than "stop" which would stop the UI)
-        call_all_functions(userdict,maindict)
+
         print "Hi in main thread"
 
-        #main.mainloop()
-
-        #gif_thread.is_alive = False
         gv.setpagetodisplay("openFindMatchResultsPage")
