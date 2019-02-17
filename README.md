@@ -9,6 +9,7 @@ This project repository contains the final version of a program built with Pytho
 - Python Requests & Pillow Library Plugins
 - Python Tkinter GUI
 - Google Books API
+- SQLite 3
 
 ## Prerequisites
 - Python 2.7 Installed
