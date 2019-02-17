@@ -178,16 +178,6 @@ class LoadingScreen():
             # add this list to lists_from_each_functions
             lists_from_each_functions.append(listoftop3_accepted_profiles_based_on_books)
 
-            ################################################################################################################
-            ######################### DELETE THIS HARDCODED FUNCTION 4 DICTIONARY AND LIST (FOR TEST USE ONLY) #############
-            '''dict_accepted_profiles_based_on_books = {'Jenny Wang': 20, 'Rose': 10, 'Kevin': 20, 'Teresa': 20,
-                                                     'Joel Jackson': 40, 'Carol': 20, 'Shelley': 20, 'Lisa Marie': 0}
-            listoftop3_accepted_profiles_based_on_books = ['Joel Jackson', 'Carol', 'Shelley']
-            #listoftop3_accepted_profiles_based_on_books = []
-            lists_from_each_functions.append(listoftop3_accepted_profiles_based_on_books)'''
-
-            ################################################################################################################
-
 
             ##########################################################################################################
             ############################################# Function 5
